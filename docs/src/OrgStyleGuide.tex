@@ -1,0 +1,58 @@
+\documentclass[12pt]{article}
+
+% packages
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[normalem]{ulem}
+
+% document
+
+\begin{document}
+
+\begin{center}
+\large{ORG Engine -- Programming Style Guide}\\
+\normalsize{Arkell Tech Inc. -- \today}
+\end{center}
+\hrulefill
+%\pagenumber{arabic}
+
+\section{Files \& Folders}
+
+\begin{itemize}
+\item Media files (images, audio) follow \texttt{UpperCamelCase.<extension>}
+\item C++ source files follow \texttt{UpperCamelCase.cpp}
+\item C++ header files follow \texttt{UpperCamelCase.hpp}
+\item Folders/directories follow \texttt{lower\_underscore}
+\item \texttt{.md} files follow \texttt{CAPS\_UNDERSCORE.md}
+\end{itemize}
+
+\section{C++}
+
+\subsection{General}
+The ORG engine's priorities for C++ code are generally ordered as follows: \textbf{1.} portability, \textbf{2.} maintainability, \textbf{3.} clarity, and \textbf{4.} performance. Therefore if a segment of code is clear, but not easily maintained, it should be changed. Performant but not clear? Should probably be changed. Maintainable but not portable? Change it. Etc., etc.
+
+STL containers are preferred when applicable. Similarly, C++ paradigms are preferred over C equivalents; e.g. \texttt{enum class} over \texttt{enum}, \texttt{struct} over \texttt{typedef struct}, \texttt{constexpr} over \texttt{\#define}. Standard OO best practices should be followed; member data should be not be externally visible (accessor functions should be used instead),
+
+\texttt{auto} is a useful tool for writing maintainable code, but be weary of using it in complicated snippets as it can hinder readability by hiding information. 
+
+\subsection{Naming / Identifiers}
+\begin{itemize}
+\item Class and struct names follow \texttt{UpperCamelCase}
+\item Member variables follow \texttt{\_lowerCamelCase}
+\item Static class variables follow \texttt{s\_lowerCamelCase}
+\item Local variables follow \texttt{lowerCamelCase}
+\item Constants follow \texttt{CAPS\_UNDERSCORE}
+\item Enum values follow \texttt{CAPS\_UNDERSCORE}
+\end{itemize}
+
+Lastly, short forms in identifiers should generally be avoided. So, if you're writing a class that represents a \textbf{regular expression}, \texttt{RegularExpression} is much preferred over \texttt{RegExp}.
+
+\section{C}
+
+\section{Python}
+
+\section{CMake}
+
+\end{document}

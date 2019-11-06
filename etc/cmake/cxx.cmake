@@ -1,0 +1,8 @@
+macro(set_cxx_ver version)
+    set(CMAKE_CXX_STANDARD ${version})
+    set(CMAKE_CXX_STANDARD_REQUIRED ON)
+    set(CMAKE_CXX_EXTENSIONS OFF)
+    if(NOT MSVC)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${warnings_incompatible_with_cxx11}")
+    endif()
+endmacro(set_cxx_ver)

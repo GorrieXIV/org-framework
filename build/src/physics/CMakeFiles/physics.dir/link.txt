@@ -1,0 +1,2 @@
+/usr/bin/ar qc libphysics.a  CMakeFiles/physics.dir/CollisionDetection.cpp.o
+/usr/bin/ranlib libphysics.a

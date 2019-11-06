@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.5)
+
+# # # # # # # # # # # # # # # # # #
+project(orgengine)
+# # # # # # # # # # # # # # # # # #
+
+set(orgengine_VERSION_MAJOR 0)
+set(orgengine_VERSION_MINOR 1)
+
+set(CMAKE_BUILD_TYPE Debug)
+
+set(CMAKE_OSX_SYSROOT /)
+set(CMAKE_OSX_DEPLOYMENT_TARGET)
+
+cmake_policy(SET CMP0063 NEW)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/etc/cmake)
+
+include(cxx)
+
+set_cxx_ver(14)
+enable_testing()
+
+set(INSTALL_BIN_DIR "bin/")
+
+add_subdirectory(src)

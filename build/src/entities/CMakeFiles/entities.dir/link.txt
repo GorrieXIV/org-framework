@@ -1,0 +1,2 @@
+/usr/bin/ar qc libentities.a  CMakeFiles/entities.dir/Entity.cpp.o
+/usr/bin/ranlib libentities.a
