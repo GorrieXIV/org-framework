@@ -1,2 +1,0 @@
-/usr/bin/ar qc libmath.a  CMakeFiles/math.dir/Geometry.cpp.o CMakeFiles/math.dir/Vectors.cpp.o
-/usr/bin/ranlib libmath.a

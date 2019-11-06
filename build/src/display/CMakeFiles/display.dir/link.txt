@@ -1,2 +1,0 @@
-/usr/bin/ar qc libdisplay.a  CMakeFiles/display.dir/DisplayEngine.cpp.o CMakeFiles/display.dir/Texture.cpp.o CMakeFiles/display.dir/Camera.cpp.o CMakeFiles/display.dir/TexturedEntity.cpp.o
-/usr/bin/ranlib libdisplay.a

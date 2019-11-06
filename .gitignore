@@ -1,0 +1,18 @@
+# Temp files
+*~
+*.swp
+
+# Source build files
+*.o
+build
+origins/build
+
+# Doc build files
+*.aux
+*.log
+
+# Executable
+origins/origins*
+
+# macOS
+.DS_Store

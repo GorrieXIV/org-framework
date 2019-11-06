@@ -1,2 +1,0 @@
-/usr/bin/ar qc libtime.a  CMakeFiles/time.dir/Timer.cpp.o
-/usr/bin/ranlib libtime.a
