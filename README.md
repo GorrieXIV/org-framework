@@ -1,6 +1,6 @@
 OrgEngine - the Origins Realtime Game Engine
 ============================================
-[![Build Status](https://travis-ci.com/GorrieXIV/OrgEngine.svg?token=snBiXmcUC8gfN5NqbuxD&branch=master)](https://travis-ci.com/GorrieXIV/OrgEngine)
+[![Build Status](https://travis-ci.com/GorrieXIV/ORG-Engine.svg?branch=master)](https://travis-ci.com/GorrieXIV/ORG-Engine)
 
 ## Installing Dependencies
 

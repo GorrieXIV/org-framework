@@ -6,7 +6,7 @@ matrix:
     # Ubuntu Linux 18.0
     - os: linux
       compiler: gcc
-      before_install: sudo ./bin/instell_deps.sh
+      before_install: sudo ./bin/install_deps.sh
 
     # Apple OSC LLVM
     - os: osx
