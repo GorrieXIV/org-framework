@@ -15,12 +15,12 @@ std::string Entity::getStatus() const
     return status;
 }
 
-Rectangle Entity::relativeToWorldPos(const Rectangle& rect)
+Rectangle<float> Entity::relativeToWorldPos(const Rectangle<float>& rect)
 {
-    return Rectangle(int(_position.x + rect.position.x - rect.width / 2),
-                     int(_position.y + rect.position.y - rect.height / 2),
-                     int(rect.width),
-                     int(rect.height));
+    return Rectangle<float>(int(_position.x + rect.position.x - rect.width / 2),
+                            int(_position.y + rect.position.y - rect.height / 2),
+                            int(rect.width),
+                            int(rect.height));
 }
 
 Entity::~Entity() {}

@@ -11,10 +11,10 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
     if (_spriteClip.isNull()) {
         return;
     }
-    Rectangle drawQuad = Rectangle(static_cast<int>(_position.x),
-                                   static_cast<int>(_position.y),
-                                   static_cast<int>(_width),
-                                   static_cast<int>(_height));
+    DisplayRectangle drawQuad = DisplayRectangle(static_cast<int>(_position.x),
+                                                 static_cast<int>(_position.y),
+                                                 static_cast<int>(_width),
+                                                 static_cast<int>(_height));
     displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad);
 
     if (debug_worldPosition) {
@@ -38,13 +38,19 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
 
     if (debug_hitboxes) {
         for (const auto& hitbox : _hitboxes) {
-            Rectangle worldPosHitbox = relativeToWorldPos(hitbox);
-            displayEngine.drawRectangle(worldPosHitbox);
+            //TODO: Build a cleaner means of casting between different Rectangle types.
+            auto worldPosHitbox = relativeToWorldPos(hitbox);
+            auto displayPositionHitbox = Rectangle<int>(static_cast<int>(worldPosHitbox.position.x),
+                                                        static_cast<int>(worldPosHitbox.position.y),
+                                                        static_cast<int>(worldPosHitbox.width),
+                                                        static_cast<int>(worldPosHitbox.height));
+            displayEngine.drawRectangle(displayPositionHitbox);
         }
     }
 }
 
-void TexturedEntity::setTextureFromSpriteSheet(const std::string& sheetName, const Rectangle& spriteClip)
+void TexturedEntity::setTextureFromSpriteSheet(const std::string& sheetName,
+                                               const DisplayRectangle& spriteClip)
 {
     _textureSheet = sheetName;
     _spriteClip = spriteClip;
@@ -52,11 +58,11 @@ void TexturedEntity::setTextureFromSpriteSheet(const std::string& sheetName, con
 
 void TexturedEntity::createTextureFromSpriteSheet(const std::string& sheetName)
 {
-    _spriteClip = Rectangle(0, 0, 0, 0);
+    _spriteClip = DisplayRectangle(0, 0, 0, 0);
     _texture.loadFromSheet(sheetName);
 }
 
-void TexturedEntity::updateSprite(const Rectangle& spriteClip)
+void TexturedEntity::updateSprite(const DisplayRectangle& spriteClip)
 {
     _spriteClip = spriteClip;
 }

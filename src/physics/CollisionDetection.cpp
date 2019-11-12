@@ -2,7 +2,7 @@
 
 namespace orgphysics {
 
-bool collisionDetected(const Rectangle& recA, const Rectangle& recB)
+bool collisionDetected(const Rectangle<float>& recA, const Rectangle<float>& recB)
 {
     if (recA.position.x < recB.position.x + recB.width
      && recA.position.x + recA.width > recB.position.x

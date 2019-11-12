@@ -149,8 +149,8 @@ DISPLAY_ENGINE_STATUS DisplayEngine::setTextureClips()
 
 // THE drawTextureAt FUNCTIONS NEED TO BE REFACTORED
 DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(SDL_Texture* texture,
-                                                   const Rectangle& clipQuad,
-                                                   const Rectangle& drawQuad)
+                                                   const DisplayRectangle& clipQuad,
+                                                   const DisplayRectangle& drawQuad)
 {
     try {
         SDL_Rect t1 = {static_cast<int>(clipQuad.position.x),
@@ -183,8 +183,8 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(SDL_Texture* texture,
 
 // THE drawTextureAt FUNCTIONS NEED TO BE REFACTORED
 DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
-                                                   const Rectangle& clipQuad,
-                                                   const Rectangle& drawQuad)
+                                                   const DisplayRectangle& clipQuad,
+                                                   const DisplayRectangle& drawQuad)
 {
     try {
         SDL_Rect t1 = {static_cast<int>(clipQuad.position.x),
@@ -216,8 +216,8 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
 }
 
 DISPLAY_ENGINE_STATUS DisplayEngine::drawSpriteAt(const std::string& sheetName,
-                                                  const Rectangle& clipQuad,
-                                                  const Rectangle& drawQuad)
+                                                  const DisplayRectangle& clipQuad,
+                                                  const DisplayRectangle& drawQuad)
 {
     try {
         SDL_Texture* sheetCopy =
@@ -248,7 +248,7 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawSpriteAt(const std::string& sheetName,
     }
 }
 
-DISPLAY_ENGINE_STATUS DisplayEngine::drawRectangle(const Rectangle& rect,
+DISPLAY_ENGINE_STATUS DisplayEngine::drawRectangle(const DisplayRectangle& rect,
                                                    const std::string& colour)
 {
     if (rect.isUnconstrained()) { return DISPLAY_ENGINE_STATUS::ENGINE_SUCCESS; }

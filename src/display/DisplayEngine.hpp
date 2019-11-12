@@ -21,6 +21,7 @@ using namespace orgmath;
 
 using Sprite = SDL_Surface;
 using HardwareTexture = SDL_Texture*;
+using DisplayRectangle = Rectangle<int>;
 
 enum class ImageBufferType { TEXTURE, SURFACE };
 
@@ -60,19 +61,19 @@ class DisplayEngine {
 
     /// Draws the clipQuad subset of texture at drawQuad.
     DISPLAY_ENGINE_STATUS drawTextureAt(SDL_Texture* texture,
-                                        const Rectangle& clipQuad,
-                                        const Rectangle& drawQuad);
+                                        const DisplayRectangle& clipQuad,
+                                        const DisplayRectangle& drawQuad);
 
     DISPLAY_ENGINE_STATUS drawTextureAt(const std::string& textureSheet,
-                                        const Rectangle& clipQuad,
-                                        const Rectangle& drawQuad);
+                                        const DisplayRectangle& clipQuad,
+                                        const DisplayRectangle& drawQuad);
 
     DISPLAY_ENGINE_STATUS drawSpriteAt(const std::string& spriteSheet,
-                                       const Rectangle& clipQuad,
-                                       const Rectangle& drawQuad);
+                                       const DisplayRectangle& clipQuad,
+                                       const DisplayRectangle& drawQuad);
 
     /// Draws a filled-in rectangle `rect` in colour `colour`
-    DISPLAY_ENGINE_STATUS drawRectangle(const Rectangle& rect,
+    DISPLAY_ENGINE_STATUS drawRectangle(const DisplayRectangle& rect,
                                         const std::string& colour = "red");
 
     /// Copies the content of a region of a stored sprite sheet to `out`.

@@ -12,6 +12,8 @@ extern DisplayEngine displayEngine;
 
 using namespace orgmath;
 
+using DisplayRectangle = Rectangle<int>;
+
 class Texture {
   public:
     /// Initializes variables
@@ -37,7 +39,7 @@ class Texture {
     void setAlpha (Uint8 alpha);
 
     /// Renders texture at given point
-    void render(const int x, const int y, const Rectangle& clip);
+    void render(const int x, const int y, const DisplayRectangle& clip);
 
     /// Gets image dimensions
     void setWidth(int width) { _width = width; }
