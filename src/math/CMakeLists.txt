@@ -6,7 +6,6 @@ set(HEADERS
 
 set(SOURCES
     Geometry.cpp
-    Vectors.cpp
     )
 
 source_group("Headers" FILES ${HEADERS})

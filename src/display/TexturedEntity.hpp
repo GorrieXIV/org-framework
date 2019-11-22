@@ -23,10 +23,10 @@ class TexturedEntity : public Entity {
 
     /// Share a surface owned by the display engine.
     void setTextureFromSpriteSheet(const std::string& sheetName,
-                                   const Rectangle& spriteClip);
+                                   const DisplayRectangle& spriteClip);
 
     /// Sets a new sprite clip, changing the sprite displayed for the entity.
-    void updateSprite(const Rectangle& spriteClip);
+    void updateSprite(const DisplayRectangle& spriteClip);
 
     void createTextureFromSpriteSheet(const std::string& sheetName);
 
@@ -36,5 +36,5 @@ class TexturedEntity : public Entity {
   protected:
     std::string _textureSheet{};
     Texture _texture;
-    Rectangle _spriteClip;
+    DisplayRectangle _spriteClip;
 };

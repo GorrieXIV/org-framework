@@ -30,14 +30,14 @@ class Entity {
 
     void setHeight(float height) { _height = height; }
 
-    Rectangle relativeToWorldPos(const Rectangle& rect);
+    Rectangle<float> relativeToWorldPos(const Rectangle<float>& rect);
 
-    Rectangle temp_getHitbox() {
+    Rectangle<float> temp_getHitbox() {
         auto hb = _hitboxes.front();
-        return Rectangle(hb.position.x + _position.x - hb.width / 2,
-                         hb.position.y + _position.y - hb.height / 2,
-                         hb.width,
-                         hb.height);
+        return Rectangle<float>(hb.position.x + _position.x - hb.width / 2,
+                                hb.position.y + _position.y - hb.height / 2,
+                                hb.width,
+                                hb.height);
     }
 
     std::string getStatus() const;
@@ -47,6 +47,6 @@ class Entity {
     float _width;
     float _height;
 
-    std::vector<Rectangle> _hitboxes{};
+    std::vector<Rectangle<float>> _hitboxes{};
 
 };

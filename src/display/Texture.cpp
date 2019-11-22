@@ -75,10 +75,10 @@ void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue)
     SDL_SetTextureColorMod(_texture, red, green, blue);
 }
 
-void Texture::render(const int x, const int y, const Rectangle& clip)
+void Texture::render(const int x, const int y, const Rectangle<int>& clip)
 {
     // Set rendering space and render to screen
-    Rectangle renderQuad = {x, y, _width, _height};
+    Rectangle<int> renderQuad = {x, y, _width, _height};
 
     // Set clip rendering dimensions
     if (!clip.isNull()) {
