@@ -1,5 +1,12 @@
 #include "Geometry.hpp"
 
+using namespace orgmath;
+
+template class Point<int>;
+template class Point<float>;
+template class Rectangle<int>;
+template class Rectangle<float>;
+
 template <typename __type__>
 bool operator== (const orgmath::Rectangle<__type__>& r1,
                  const orgmath::Rectangle<__type__>& r2)

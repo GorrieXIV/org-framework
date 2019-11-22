@@ -1,14 +1,15 @@
 #pragma once
 
-#include "Window.hpp"
+#include "platform.hpp"
 #include "Vectors.hpp"
 
 namespace orgmath {
 
 /// Point
+template <typename __type__>
 struct Point {
-    float x = 0;
-    float y = 0;
+    __type__ x = 0;
+    __type__ y = 0;
 
     bool isNull() const {
         return (x == 0 && y == 0);
@@ -18,9 +19,6 @@ struct Point {
         return ("{" + std::to_string(x) + ", " + std::to_string(y) + "}");
     }
 }; // Point
-
-constexpr Point ORIGIN{0, 0};
-
 
 /// Rectangle
 template <typename __type__>
@@ -38,10 +36,10 @@ public:
     }
 
     /// Instantiate a rectangle with topLeft point, width, and height.
-    Rectangle(Point topLeft, __type__ width, __type__ height);
+    Rectangle(Point<__type__> topLeft, __type__ width, __type__ height);
 
     /// Instantiate a rectangle drawn from point topLeft to point bottomRight.
-    Rectangle(Point topLeft, Point bottomRight);
+    Rectangle(Point<__type__> topLeft, Point<__type__> bottomRight);
 
     /// Instantiate an unconstrained rectangle.
     Rectangle(__type__ width, __type__ height)
@@ -74,29 +72,31 @@ public:
     /// "{Inf, Inf, <width>, <height>}".
     std::string toString() const;
 
-    __type__ width = 0;
-    __type__ height = 0;
+    __type__ width{};
+    __type__ height{};
 
     // Position of the top-left corner of the rectangle.
-    Point position{nanf(""), nanf("")};
+    //TODO: Readd support for initializing position as a pair of NaNs.
+    Point<__type__> position{{}, {}};
 }; // Rectangle
 
 /// Circle
+template<typename __type__>
 class Circle {
 public:
     /// Instantiate a cirlce with an x coordinate, y coordinate, and radius.
-    Circle(float x, float y, float radius);
+    Circle(__type__ x, __type__ y, __type__ radius);
 
     /// Instantiate a circle with a center-point and radius.
-    Circle(Point centerPoint, float radius);
+    Circle(Point<__type__> centerPoint, __type__ radius);
 
     /// Instantiate an unconstrained circle.
-    Circle(float radius);
+    Circle(__type__ radius);
 
 private:
-    Point _center;
-    float _radius = 0;
-    float _circumference = 0;
+    Point<__type__> _center;
+    __type__ _radius = 0;
+    __type__ _circumference = 0;
 }; // Circle
 
 }; // namespace orgmath
