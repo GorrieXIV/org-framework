@@ -1,8 +1,39 @@
-# Build system libraries.
-add_subdirectory(platform)
-add_subdirectory(math)
-add_subdirectory(physics)
-add_subdirectory(time)
-add_subdirectory(entities)
-add_subdirectory(controls)
-add_subdirectory(display)
+set(HEADERS
+    DisplayEngine.hpp
+    Texture.hpp
+    Camera.hpp
+    TexturedEntity.hpp
+    Window.hpp
+    Geometry.hpp
+    Vectors.hpp
+    CollisionDetection.hpp
+    Timer.hpp
+    Entity.hpp
+    Controller.hpp
+    SDL.h
+    )
+
+set(SOURCES
+    DisplayEngine.cpp
+    Texture.cpp
+    Camera.cpp
+    TexturedEntity.cpp
+    Window.cpp
+    Geometry.cpp
+    CollisionDetection.cpp
+    Timer.cpp
+    Entity.cpp
+    Controller.cpp
+    )
+
+source_group("Headers" FILES ${HEADERS})
+source_group("Sources" FILES ${SOURCES})
+
+add_library(orgengine STATIC ${SOURCES} ${HEADERS})
+
+target_link_libraries(orgengine PRIVATE
+    -L/usr/local/
+    -lSDL2
+    -lSDL2_image
+    -lSDL2_ttf
+    )
