@@ -13,7 +13,7 @@ source_group("Sources" FILES ${SOURCES})
 # Package the system library
 add_library(platform STATIC ${SOURCES} ${HEADERS})
 
-target_link_libraries(platform PUBLIC
+target_link_libraries(platform PRIVATE#PUBLIC
     -L/usr/local/
     -lSDL2
     -lSDL2_image

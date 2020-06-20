@@ -5,7 +5,7 @@ project(orgengine)
 # # # # # # # # # # # # # # # # # #
 
 set(orgengine_VERSION_MAJOR 0)
-set(orgengine_VERSION_MINOR 1)
+set(orgengine_VERSION_MINOR 2)
 
 set(CMAKE_BUILD_TYPE Debug)
 
