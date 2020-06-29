@@ -12,7 +12,7 @@ DisplayEngine::~DisplayEngine()
 }
 
 
-DISPLAY_ENGINE_STATUS DisplayEngine::initSDL() {
+DISPLAY_ENGINE_STATUS DisplayEngine::initWindow(const std::string windowTitle) {
     // Initialization flag
     DISPLAY_ENGINE_STATUS retStatus = ENGINE_SUCCESS;
 
@@ -26,7 +26,7 @@ DISPLAY_ENGINE_STATUS DisplayEngine::initSDL() {
         }
 
         // Create window
-        window = SDL_CreateWindow("Origins - v.0.2",
+        window = SDL_CreateWindow(windowTitle.c_str(),
                                   SDL_WINDOWPOS_UNDEFINED,
                                   SDL_WINDOWPOS_UNDEFINED,
                                   SCREEN_WIDTH,

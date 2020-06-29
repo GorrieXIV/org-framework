@@ -41,7 +41,7 @@ class DisplayEngine {
     ~DisplayEngine();
 
     /// Start SDL.
-    DISPLAY_ENGINE_STATUS initSDL();
+    DISPLAY_ENGINE_STATUS initWindow(const std::string windowTitle = "");
 
     /// Load SPRITE sheet <sheetName> from <sheetFile>
     DISPLAY_ENGINE_STATUS loadSpriteSheetFromFile(std::string sheetName, std::string sheetFile);
