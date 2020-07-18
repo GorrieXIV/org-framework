@@ -9,7 +9,7 @@ Controller::Controller()
 
 void Controller::addMouseListener(int mouseButton,
                                   ORG_MOUSE_EVENT clickType,
-                                  Event event,
+                                  MouseEvent event,
                                   int priority)
 {
     _mouseEventMap.emplace(mouseButton, event);
@@ -17,15 +17,16 @@ void Controller::addMouseListener(int mouseButton,
 
 void Controller::addKeyListener(char key,
                                 ORG_KEY_EVENT strokeType,
-                                Event event,
+                                KeyEvent event,
                                 int priority)
 {
     _keyEventMap.emplace(ORG_SDL_KEY_MAPPING.at(key), event);
 }
 
-void Controller::pollForInput()
+void Controller::poll()
 {
-    SDL_Event e;
+    std::cout << "polling controller... " << std::endl;
+    /*SDL_Event e;
     while(SDL_PollEvent(&e) != 0) {
         if(e.type == SDL_QUIT) {
         } else if (e.type == SDL_MOUSEBUTTONDOWN) {
@@ -52,4 +53,5 @@ void Controller::pollForInput()
             }
         }
     }
+    */
 }

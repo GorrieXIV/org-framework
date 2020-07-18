@@ -33,7 +33,8 @@ const std::map<char, int> ORG_SDL_KEY_MAPPING = {
 
 // We use std::functions to store events (entity member functions)
 // to different user inputs.
-using Event = std::function<void()>;
+using MouseEvent = std::function<void(int, int)>;
+using KeyEvent = std::function<void()>;
 
 class Controller
 {
@@ -47,12 +48,12 @@ public:
 
     /// Reads the current state as reported by SDL
     /// and maps the state to the appropriate event.
-    void pollForInput();
+    void poll();
 
     /// Ties clicking of a particular game object to an event
     void addEventOnClick(Entity& object,
-                         const Event conditional,
-                         const Event event);
+                         const MouseEvent conditional,
+                         const MouseEvent event);
 
     void addEventOnDragOver();
 
@@ -62,7 +63,7 @@ public:
     /// @param eventMap: maps an entity or state to an event
     void addMouseListener(int mouseButton,
                           ORG_MOUSE_EVENT clickType,
-                          Event event,
+                          MouseEvent event,
                           int priority);
 
     /// Creates a listener on a keystroke
@@ -71,10 +72,10 @@ public:
     /// @param eventMap: maps an entity or state to an event
     void addKeyListener(char key,
                         ORG_KEY_EVENT strokeType,
-                        Event event,
+                        KeyEvent event,
                         int priority);
 
 private:
-    std::map<int, Event> _mouseEventMap{};
-    std::map<int, Event> _keyEventMap{};
+    std::map<int, MouseEvent> _mouseEventMap{};
+    std::map<int, KeyEvent> _keyEventMap{};
 };
