@@ -7,14 +7,20 @@ Controller::Controller()
 
 }
 
-void Controller::addMouseListener(int mouseButton, int clickType, Event event)
+void Controller::addMouseListener(int mouseButton,
+                                  ORG_MOUSE_EVENT clickType,
+                                  Event event,
+                                  int priority)
 {
     _mouseEventMap.emplace(mouseButton, event);
 }
 
-void Controller::addKeyListener(int key, int strokeType, int eventMap)
+void Controller::addKeyListener(char key,
+                                ORG_KEY_EVENT strokeType,
+                                Event event,
+                                int priority)
 {
-
+    _keyEventMap.emplace(ORG_SDL_KEY_MAPPING.at(key), event);
 }
 
 void Controller::pollForInput()

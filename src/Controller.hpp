@@ -13,6 +13,24 @@
 #include "Camera.hpp"
 #include "Entity.hpp"
 
+typedef enum {
+    MOUSE_DOWN, // 0x00
+    MOUSE_UP,   // 0x01
+} ORG_MOUSE_EVENT;
+
+typedef enum {
+    KEY_DOWN,   // 0x00
+    KEY_UP,     // 0x01
+} ORG_KEY_EVENT;
+
+const std::map<char, int> ORG_SDL_KEY_MAPPING = {
+    {'a', SDLK_a},
+    {'b', SDLK_b},
+    {'c', SDLK_c},
+    {'s', SDLK_s},
+    {'q', SDLK_q}
+};
+
 // We use std::functions to store events (entity member functions)
 // to different user inputs.
 using Event = std::function<void()>;
@@ -33,8 +51,8 @@ public:
 
     /// Ties clicking of a particular game object to an event
     void addEventOnClick(Entity& object,
-                         const std::function<void()> conditional,
-                         const std::function<void()> event);
+                         const Event conditional,
+                         const Event event);
 
     void addEventOnDragOver();
 
@@ -42,13 +60,19 @@ public:
     /// @param mouseButton: specifies the mouse button to listen on
     /// @param clickType: specifies the click type to listen on
     /// @param eventMap: maps an entity or state to an event
-    void addMouseListener(int mouseButton, int clickType, Event event);
+    void addMouseListener(int mouseButton,
+                          ORG_MOUSE_EVENT clickType,
+                          Event event,
+                          int priority);
 
     /// Creates a listener on a keystroke
     /// @param mouseButton: specifies the mouse button to listen on
     /// @param clickType: specifies the click type to listen on
     /// @param eventMap: maps an entity or state to an event
-    void addKeyListener(int key, int strokeType, int event);
+    void addKeyListener(char key,
+                        ORG_KEY_EVENT strokeType,
+                        Event event,
+                        int priority);
 
 private:
     std::map<int, Event> _mouseEventMap{};
