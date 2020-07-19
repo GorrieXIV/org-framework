@@ -25,33 +25,24 @@ void Controller::addKeyListener(char key,
 
 void Controller::poll()
 {
-    std::cout << "polling controller... " << std::endl;
-    /*SDL_Event e;
+    SDL_Event e;
     while(SDL_PollEvent(&e) != 0) {
-        if(e.type == SDL_QUIT) {
-        } else if (e.type == SDL_MOUSEBUTTONDOWN) {
+        if (e.type == SDL_MOUSEBUTTONDOWN) {
             int x, y;
             SDL_GetMouseState(&x, &y);
             x += camera.position.x;
             y -= camera.position.y;
-            auto thing = _mouseEventMap.at(SDL_MOUSEBUTTONDOWN);
+            //auto thing = _mouseEventMap.at(SDL_MOUSEBUTTONDOWN);
             // thing();
         } else if (e.type == SDL_KEYDOWN) {
-            switch(e.key.keysym.sym) {
-            case SDLK_q:
-                break;
-            case SDLK_LEFT:
-                break;
-            case SDLK_RIGHT:
-                break;
-            case SDLK_DOWN:
-                break;
-            case SDLK_UP:
-                break;
-            default:
-                break;
-            }
+            try {
+                // Map the pressed key (e.key.keysym.sym is the SDL keycode)
+                // to the correct event.
+                std::function<void()> keyEvent = _keyEventMap.at(e.key.keysym.sym);
+
+                // Execute the event.
+                keyEvent();
+            } catch (std::out_of_range e) { }
         }
     }
-    */
 }

@@ -47,7 +47,7 @@ public:
     ~Controller() = default;
 
     /// Reads the current state as reported by SDL
-    /// and maps the state to the appropriate event.
+    /// and cycls through event maps to fire the appropriate events.
     void poll();
 
     /// Ties clicking of a particular game object to an event
@@ -59,8 +59,11 @@ public:
 
     /// Creates a listener on mouse click
     /// @param mouseButton: specifies the mouse button to listen on
-    /// @param clickType: specifies the click type to listen on
-    /// @param eventMap: maps an entity or state to an event
+    /// @param clickType:   specifies the click type to listen on
+    /// @param eventMap:    maps an entity or state to an event
+    /// @param priority:    used to set the order of event firing.
+    ///                     smaller values for priority fire before higher values,
+    ///                     negative priority events will never fire.
     void addMouseListener(int mouseButton,
                           ORG_MOUSE_EVENT clickType,
                           MouseEvent event,
@@ -68,8 +71,11 @@ public:
 
     /// Creates a listener on a keystroke
     /// @param mouseButton: specifies the mouse button to listen on
-    /// @param clickType: specifies the click type to listen on
-    /// @param eventMap: maps an entity or state to an event
+    /// @param clickType:   specifies the click type to listen on
+    /// @param event:       maps an entity or state to an event
+    /// @param priority:    used to set the order of event firing.
+    ///                     smaller values for priority fire before higher values,
+    ///                     negative priority events will never fire.
     void addKeyListener(char key,
                         ORG_KEY_EVENT strokeType,
                         KeyEvent event,
