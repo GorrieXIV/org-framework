@@ -7,7 +7,7 @@ Controller::Controller()
 
 }
 
-void Controller::addMouseListener(int mouseButton,
+void Controller::addMouseListener(ORG_MOUSE_INPUT mouseButton,
                                   ORG_MOUSE_EVENT clickType,
                                   MouseEvent event,
                                   int priority)
@@ -28,17 +28,24 @@ void Controller::poll()
     SDL_Event e;
     while(SDL_PollEvent(&e) != 0) {
         if (e.type == SDL_MOUSEBUTTONDOWN) {
+            // Get the screen co-ordinates and convert them to world co-ordinates.
             int x, y;
             SDL_GetMouseState(&x, &y);
             x += camera.position.x;
             y -= camera.position.y;
-            //auto thing = _mouseEventMap.at(SDL_MOUSEBUTTONDOWN);
-            // thing();
+
+            try {
+                // Map the mouse input to the correct event.
+                auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::LEFT_CLICK);
+
+                // Execute the event.
+                mouseEvent(x, y);
+            } catch (std::out_of_range e) { }
         } else if (e.type == SDL_KEYDOWN) {
             try {
                 // Map the pressed key (e.key.keysym.sym is the SDL keycode)
                 // to the correct event.
-                std::function<void()> keyEvent = _keyEventMap.at(e.key.keysym.sym);
+                auto keyEvent = _keyEventMap.at(e.key.keysym.sym);
 
                 // Execute the event.
                 keyEvent();

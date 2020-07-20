@@ -17,6 +17,7 @@ std::string Entity::getStatus() const
 
 Rectangle<float> Entity::relativeToWorldPos(const Rectangle<float>& rect)
 {
+    //FIXME: Why do we cast these positions to int and then return a float rect?
     return Rectangle<float>(int(_position.x + rect.position.x - rect.width / 2),
                             int(_position.y + rect.position.y - rect.height / 2),
                             int(rect.width),
@@ -24,11 +25,6 @@ Rectangle<float> Entity::relativeToWorldPos(const Rectangle<float>& rect)
 }
 
 Entity::~Entity() {}
-
-Vector2 Entity::getPosition() const
-{
-    return _position;
-}
 
 void Entity::setPosition(Vector2 position)
 {

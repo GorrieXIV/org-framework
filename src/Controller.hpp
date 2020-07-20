@@ -19,6 +19,11 @@ typedef enum {
 } ORG_MOUSE_EVENT;
 
 typedef enum {
+    LEFT_CLICK,  // 0x00
+    RIGHT_CLICK, // 0x01
+} ORG_MOUSE_INPUT;
+
+typedef enum {
     KEY_DOWN,   // 0x00
     KEY_UP,     // 0x01
 } ORG_KEY_EVENT;
@@ -64,7 +69,7 @@ public:
     /// @param priority:    used to set the order of event firing.
     ///                     smaller values for priority fire before higher values,
     ///                     negative priority events will never fire.
-    void addMouseListener(int mouseButton,
+    void addMouseListener(ORG_MOUSE_INPUT mouseButton,
                           ORG_MOUSE_EVENT clickType,
                           MouseEvent event,
                           int priority);
@@ -82,6 +87,6 @@ public:
                         int priority);
 
 private:
-    std::map<int, MouseEvent> _mouseEventMap{};
+    std::map<ORG_MOUSE_INPUT, MouseEvent> _mouseEventMap{};
     std::map<int, KeyEvent> _keyEventMap{};
 };

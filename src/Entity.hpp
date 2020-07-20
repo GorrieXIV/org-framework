@@ -19,7 +19,10 @@ class Entity {
     ~Entity();
 
     /// Get the entities position as a 2d vector.
-    Vector2 getPosition() const;
+    Vector2 getPosition() const { return _position; }
+
+    /// Get the entities width and height as a 2d vector.
+    Vector2 getDimensions() const { return {_width, _height}; }
 
     /// Set the entities position with a 2d vector
     void setPosition(Vector2 position);
