@@ -28,15 +28,6 @@ Whenever adding functionality or fixing bugs, following this procedure can help 
     * Click the blue "compare across forks" link to create a PR from your fork
     * Add a useful PR title and description
 
-## Libraries
-* **libplatform**
-* **libmath**
-* **libtime**
-* **libphysics**
-* **libentities**
-* **libdisplay**
-* **libcontroller**
-
 ## Contributors
 * Robert Gorrie
 * Serge Cosman Agraz
