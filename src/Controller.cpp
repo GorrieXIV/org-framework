@@ -41,15 +41,13 @@ void Controller::poll()
                 // Execute the event.
                 mouseEvent(x, y);
             } catch (std::out_of_range e) { }
-        } else if (e.type == SDL_KEYDOWN) {
-            try {
-                // Map the pressed key (e.key.keysym.sym is the SDL keycode)
-                // to the correct event.
-                auto keyEvent = _keyEventMap.at(e.key.keysym.sym);
+        }
+    }
 
-                // Execute the event.
-                keyEvent();
-            } catch (std::out_of_range e) { }
+    auto keyboardState = SDL_GetKeyboardState(0);
+    for (const auto& [keycode, event] : _keyEventMap) {
+        if (keyboardState[keycode]) {
+            event();
         }
     }
 }

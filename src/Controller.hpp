@@ -29,11 +29,11 @@ typedef enum {
 } ORG_KEY_EVENT;
 
 const std::map<char, int> ORG_SDL_KEY_MAPPING = {
-    {'a', SDLK_a},
-    {'b', SDLK_b},
-    {'c', SDLK_c},
-    {'s', SDLK_s},
-    {'q', SDLK_q}
+    {'a', SDL_SCANCODE_A},
+    {'b', SDL_SCANCODE_B},
+    {'c', SDL_SCANCODE_C},
+    {'s', SDL_SCANCODE_S},
+    {'q', SDL_SCANCODE_Q}
 };
 
 // We use std::functions to store events (entity member functions)
@@ -43,7 +43,7 @@ using KeyEvent = std::function<void()>;
 
 class Controller
 {
-public:
+  public:
 
     ///
     Controller();
@@ -86,7 +86,7 @@ public:
                         KeyEvent event,
                         int priority);
 
-private:
+  private:
     std::map<ORG_MOUSE_INPUT, MouseEvent> _mouseEventMap{};
     std::map<int, KeyEvent> _keyEventMap{};
 };
