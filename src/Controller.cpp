@@ -25,25 +25,22 @@ void Controller::addKeyListener(char key,
 
 void Controller::poll()
 {
-    SDL_Event e;
-    while(SDL_PollEvent(&e) != 0) {
-        if (e.type == SDL_MOUSEBUTTONDOWN) {
-            // Get the screen co-ordinates and convert them to world co-ordinates.
-            int x, y;
-            SDL_GetMouseState(&x, &y);
-            x += camera.position.x;
-            y -= camera.position.y;
+    // Check mouse state and trigger events.
+    int x = 0;
+    int y = 0;
+    if (SDL_GetMouseState(&x, &y) && SDL_BUTTON(SDL_BUTTON_LEFT)) {
+        x += camera.position.x;
+        y -= camera.position.y;
+        try {
+            // Map the mouse input to the correct event.
+            auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::LEFT_CLICK);
 
-            try {
-                // Map the mouse input to the correct event.
-                auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::LEFT_CLICK);
-
-                // Execute the event.
-                mouseEvent(x, y);
-            } catch (std::out_of_range e) { }
-        }
+            // Execute the event.
+            mouseEvent(x, y);
+        } catch (std::out_of_range e) { }
     }
 
+    /// Check keyboard state and trigger events.
     auto keyboardState = SDL_GetKeyboardState(0);
     for (const auto& [keycode, event] : _keyEventMap) {
         if (keyboardState[keycode]) {
