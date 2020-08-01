@@ -10,5 +10,7 @@ public:
     Camera(float x, float y);
     Camera() = default;
 
+    void move(float dx, float dy);
+
     Vector2 position{};
 };

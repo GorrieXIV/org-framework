@@ -28,12 +28,16 @@ typedef enum {
     KEY_UP,     // 0x01
 } ORG_KEY_EVENT;
 
-const std::map<char, int> ORG_SDL_KEY_MAPPING = {
-    {'a', SDL_SCANCODE_A},
-    {'b', SDL_SCANCODE_B},
-    {'c', SDL_SCANCODE_C},
-    {'s', SDL_SCANCODE_S},
-    {'q', SDL_SCANCODE_Q}
+const std::map<std::string, int> ORG_SDL_KEY_MAPPING = {
+    {"a", SDL_SCANCODE_A},
+    {"b", SDL_SCANCODE_B},
+    {"c", SDL_SCANCODE_C},
+    {"s", SDL_SCANCODE_S},
+    {"q", SDL_SCANCODE_Q},
+    {"UP", SDL_SCANCODE_UP},
+    {"RIGHT", SDL_SCANCODE_RIGHT},
+    {"DOWN", SDL_SCANCODE_DOWN},
+    {"LEFT", SDL_SCANCODE_LEFT}
 };
 
 // We use std::functions to store events (entity member functions)
@@ -81,7 +85,7 @@ class Controller
     /// @param priority:    used to set the order of event firing.
     ///                     smaller values for priority fire before higher values,
     ///                     negative priority events will never fire.
-    void addKeyListener(char key,
+    void addKeyListener(std::string key,
                         ORG_KEY_EVENT strokeType,
                         KeyEvent event,
                         int priority);

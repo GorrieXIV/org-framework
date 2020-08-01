@@ -15,7 +15,7 @@ void Controller::addMouseListener(ORG_MOUSE_INPUT mouseButton,
     _mouseEventMap.emplace(mouseButton, event);
 }
 
-void Controller::addKeyListener(char key,
+void Controller::addKeyListener(std::string key,
                                 ORG_KEY_EVENT strokeType,
                                 KeyEvent event,
                                 int priority)
