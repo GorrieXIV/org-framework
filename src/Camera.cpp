@@ -6,7 +6,6 @@ Camera::Camera(float x, float y) : position{x, y} { }
 
 void Camera::move(float dx, float dy)
 {
-    std::cout << "moving camera" << std::endl;
     auto newX = position.x + dx;
     if (newX <= SCREEN_WIDTH && newX >= -1 * SCREEN_WIDTH) {
         position.x += dx;
