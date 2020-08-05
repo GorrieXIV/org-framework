@@ -19,7 +19,8 @@ bool Texture::loadFromFile(std::string path)
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
     if(loadedSurface == NULL)
     {
-      printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
+      std::cout << "Unable to load image " << path.c_str()
+                << "! SDL_image Error: " << IMG_GetError() << std::endl;
     }
     else
     {
@@ -32,7 +33,8 @@ bool Texture::loadFromFile(std::string path)
       newTexture = SDL_CreateTextureFromSurface(displayEngine.renderer, loadedSurface);
       if( newTexture == NULL )
       {
-        printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+        std::cout << "Unable to create texture from " << path.c_str()
+                  << "! SDL Error: " << SDL_GetError() << std::endl;
       }
       else
       {
@@ -104,11 +106,12 @@ bool FontTexture::loadFromRenderedText(TTF_Font *gFont,
 
     SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, text.c_str(), textColor);
     if (textSurface == NULL) {
-        printf("Unable to render text surface. SDL_ttf Error: %s\n", TTF_GetError());
+        std::cout << "Unable to render text surface. SDL_ttf Error: " << TTF_GetError();
     } else {
         _texture = SDL_CreateTextureFromSurface(renderer, textSurface);
         if (_texture == NULL) {
-            printf("Unable to create texture from rendered text. SDL Error: %s\n", SDL_GetError());
+            std::cout << "Unable to create texture from rendered text. SDL Error: "
+                      << SDL_GetError() << std::endl;
         } else {
             _width = textSurface->w;
             _height = textSurface->h;

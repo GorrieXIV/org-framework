@@ -18,11 +18,11 @@ DISPLAY_ENGINE_STATUS DisplayEngine::initWindow(const std::string windowTitle) {
 
     // Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-        printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+        std::cout << "SDL could not initialize! SDL Error: " << SDL_GetError() << std::endl;
         retStatus = ENGINE_SDL_INIT_ERROR;
     } else {
         if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) { //Set texture filtering to linear
-            printf("Warning: Linear texture filtering not enabled!");
+            std::cout << "Warning: Linear texture filtering not enabled!" << std::endl;
         }
 
         // Create window
@@ -33,13 +33,14 @@ DISPLAY_ENGINE_STATUS DisplayEngine::initWindow(const std::string windowTitle) {
                                   SCREEN_HEIGHT,
                                   SDL_WINDOW_SHOWN);
         if (window == NULL) {
-            printf("Window could not be created! %s\n", SDL_GetError());
+            std::cout << "Window could not be created! " << SDL_GetError() << std::endl;
             retStatus = ENGINE_WINDOW_ERROR;
         } else {
             // Create renderer for window
             renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
             if (renderer == NULL) {
-                printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+                std::cout << "Renderer could not be created! SDL Error: "
+                          << SDL_GetError() << std::endl;
                 retStatus = ENGINE_RENDERER_ERROR;
             } else {
                 // Initialize renderer color
@@ -48,12 +49,14 @@ DISPLAY_ENGINE_STATUS DisplayEngine::initWindow(const std::string windowTitle) {
                 // Initialize PNG loading
                 int imgFlags = IMG_INIT_PNG;
                 if (!(IMG_Init(imgFlags) & imgFlags)) {
-                    printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+                    std::cout << "SDL_image could not initialize! SDL_image Error: "
+                              << IMG_GetError() << std::endl;
                     retStatus = ENGINE_IMAGE_INIT_ERROR;
                 }
 
                 if (TTF_Init() == -1) {
-                    printf("SDL_ttf could not initialize. SDL_ttf Error: %s\n", TTF_GetError());
+                    std::cout << "SDL_ttf could not initialize. SDL_ttf Error: "
+                              << TTF_GetError() << std::endl;
                     retStatus = ENGINE_TTF_INIT_ERROR;
                 }
 
