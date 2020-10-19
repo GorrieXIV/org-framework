@@ -1,6 +1,5 @@
 #pragma once
 
-#include "SDL.h"
 #include "Geometry.hpp"
 
 using namespace orgmath;

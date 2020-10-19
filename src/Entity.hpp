@@ -6,6 +6,8 @@
 #include "Vectors.hpp"
 #include "Geometry.hpp"
 
+#include <iostream>
+
 using namespace orgmath;
 
 /* ENTITY CLASS ------------------------------------------- */
@@ -46,6 +48,9 @@ class Entity {
                                 hb.height);
     }
 
+    /// Use this function to tell `this` that it collided with another Entity.
+    void triggerCollision(const Entity& actor) { std::cout << "Collision detected" << std::endl; }
+
     std::string getStatus() const;
 
   protected:
@@ -54,5 +59,4 @@ class Entity {
     float _height;
 
     std::vector<Rectangle<float>> _hitboxes{};
-
 };

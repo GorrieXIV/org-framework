@@ -34,10 +34,10 @@ extern Camera camera;
 class DisplayEngine {
 
   public:
-    ///
+    /// Default Constructor.
     DisplayEngine();
 
-    ///
+    /// Destructor.
     ~DisplayEngine();
 
     /// Start SDL.
