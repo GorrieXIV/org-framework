@@ -40,7 +40,7 @@ class Entity {
 
     Rectangle<float> relativeToWorldPos(const Rectangle<float>& rect);
 
-    Rectangle<float> temp_getHitbox() {
+    Rectangle<float> temp_getHitbox() const {
         auto hb = _hitboxes.front();
         return Rectangle<float>(hb.position.x + _position.x - hb.width / 2,
                                 hb.position.y + _position.y - hb.height / 2,
@@ -49,9 +49,9 @@ class Entity {
     }
 
     /// Use this function to tell `this` that it collided with another Entity.
-    void triggerCollision(const Entity& actor) { std::cout << "Collision detected" << std::endl; }
+    void triggerCollision() { std::cout << "Collision detected" << std::endl; }
 
-    std::string getStatus() const;
+    virtual std::string getStatus() const = 0;
 
   protected:
     Vector2 _position;
