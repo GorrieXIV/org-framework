@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 #include "Geometry.hpp"
 #include "CollisionDetection.hpp"
@@ -21,8 +22,11 @@ class PhysicsEngine {
     /// Check for collisions on the current frame.
     void checkCollisions();
 
+    /// Add an entity to the once-per-frame collision check.
+    void addEntity(Entity& entity);
+
   private:
-    std::vector<Entity> _entities;
+    std::vector<std::shared_ptr<Entity>> _entities;
 };
 
 }; // namespace orgphysics

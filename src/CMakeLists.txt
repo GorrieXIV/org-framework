@@ -6,6 +6,7 @@ set(HEADERS
     Window.hpp
     Geometry.hpp
     Vectors.hpp
+    PhysicsEngine.hpp
     CollisionDetection.hpp
     Timer.hpp
     Entity.hpp
@@ -20,6 +21,7 @@ set(SOURCES
     TexturedEntity.cpp
     Window.cpp
     Geometry.cpp
+    PhysicsEngine.cpp
     CollisionDetection.cpp
     Timer.cpp
     Entity.cpp
