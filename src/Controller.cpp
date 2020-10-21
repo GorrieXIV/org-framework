@@ -37,9 +37,10 @@ void Controller::poll()
     // Check mouse state and trigger events.
     int x = 0;
     int y = 0;
-    if (SDL_GetMouseState(&x, &y) && SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        x += camera.position.x;
-        y -= camera.position.y;
+    bool mouseClicked = SDL_GetMouseState(&x, &y);
+    x += camera.position.x;
+    y -= camera.position.y;
+    if (mouseClicked && SDL_BUTTON(SDL_BUTTON_LEFT)) {
         try {
             // Map the mouse input to the correct event.
             auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::LEFT_CLICK);
@@ -48,7 +49,7 @@ void Controller::poll()
             mouseEvent(x, y);
         } catch (std::out_of_range e) { }
 
-        for (const auto& [entityClickPairing, event] : _clickEventMap) {
+        for (const auto& [entityClickPairing, clickEvent] : _clickEventMap) {
             // Retrieve entity and mouse button from the std::pair.
             auto entityReference = std::get<0>(entityClickPairing);
             auto mouseButton     = std::get<1>(entityClickPairing);
@@ -63,9 +64,19 @@ void Controller::poll()
                 entityPosition.x < x + entityDimensions.x &&
                 entityPosition.y > y - entityDimensions.y &&
                 entityPosition.y < y + entityDimensions.y) {
-                // TODO: fire `event`.
+                clickEvent(x, y);
             }
         }
+    }
+
+    if (mouseClicked && SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+        try {
+            // Map the mouse input to the correct event.
+            auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::RIGHT_CLICK);
+
+            // Execute the event.
+            mouseEvent(x, y);
+        } catch (std::out_of_range e) { }
     }
 
     /// Check keyboard state and trigger events.
