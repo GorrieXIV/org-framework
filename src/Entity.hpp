@@ -49,7 +49,7 @@ class Entity {
     }
 
     /// Use this function to tell `this` that it collided with another Entity.
-    void triggerCollision() { std::cout << "Collision detected" << std::endl; }
+    virtual void triggerCollision() { /* collision detected */ }
 
     virtual std::string getStatus() const = 0;
 

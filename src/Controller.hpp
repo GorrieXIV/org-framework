@@ -8,6 +8,7 @@
 
 #include <functional>
 #include <map>
+#include <memory>
 
 #include "SDL.h"
 #include "Camera.hpp"
@@ -42,8 +43,9 @@ const std::map<std::string, int> ORG_SDL_KEY_MAPPING = {
 
 // We use std::functions to store events (entity member functions)
 // to different user inputs.
-using MouseEvent = std::function<void(int, int)>;
-using KeyEvent = std::function<void()>;
+using MouseEvent      = std::function<void(int, int)>;
+using KeyEvent        = std::function<void()>;
+using EntityReference = std::shared_ptr<Entity>;
 
 class Controller
 {
@@ -60,9 +62,9 @@ class Controller
     void poll();
 
     /// Ties clicking of a particular game object to an event
-    void addEventOnClick(Entity& object,
-                         const MouseEvent conditional,
-                         const MouseEvent event);
+    void addEventOnClick(Entity& entity,
+                         const ORG_MOUSE_INPUT mouseButton,
+                         MouseEvent event);
 
     void addEventOnDragOver();
 
@@ -93,4 +95,5 @@ class Controller
   private:
     std::map<ORG_MOUSE_INPUT, MouseEvent> _mouseEventMap{};
     std::map<int, KeyEvent> _keyEventMap{};
+    std::map<std::pair<EntityReference, ORG_MOUSE_INPUT>, MouseEvent> _clickEventMap{};
 };

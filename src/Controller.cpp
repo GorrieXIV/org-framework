@@ -23,6 +23,15 @@ void Controller::addKeyListener(std::string key,
     _keyEventMap.emplace(ORG_SDL_KEY_MAPPING.at(key), event);
 }
 
+void Controller::addEventOnClick(Entity& entity,
+                                 const ORG_MOUSE_INPUT mouseButton,
+                                 MouseEvent event)
+{
+    auto entityReference = EntityReference(&entity);
+    std::pair<EntityReference, ORG_MOUSE_INPUT> entityClickPairing{entityReference, mouseButton};
+    _clickEventMap.emplace(entityClickPairing, event);
+}
+
 void Controller::poll()
 {
     // Check mouse state and trigger events.
@@ -38,6 +47,25 @@ void Controller::poll()
             // Execute the event.
             mouseEvent(x, y);
         } catch (std::out_of_range e) { }
+
+        for (const auto& [entityClickPairing, event] : _clickEventMap) {
+            // Retrieve entity and mouse button from the std::pair.
+            auto entityReference = std::get<0>(entityClickPairing);
+            auto mouseButton     = std::get<1>(entityClickPairing);
+
+            if (mouseButton != ORG_MOUSE_INPUT::LEFT_CLICK) {
+                continue;
+            }
+
+            auto entityPosition   = entityReference->getPosition();
+            auto entityDimensions = entityReference->getDimensions();
+            if (entityPosition.x > x - entityDimensions.x &&
+                entityPosition.x < x + entityDimensions.x &&
+                entityPosition.y > y - entityDimensions.y &&
+                entityPosition.y < y + entityDimensions.y) {
+                // TODO: fire `event`.
+            }
+        }
     }
 
     /// Check keyboard state and trigger events.
