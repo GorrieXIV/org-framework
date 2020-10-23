@@ -34,13 +34,16 @@ void Controller::addEventOnClick(Entity& entity,
 
 void Controller::poll()
 {
+    SDL_PumpEvents();
+
     // Check mouse state and trigger events.
     int x = 0;
     int y = 0;
-    bool mouseClicked = SDL_GetMouseState(&x, &y);
+    int mouseButtonState = SDL_GetMouseState(&x, &y);
     x += camera.position.x;
     y -= camera.position.y;
-    if (mouseClicked && SDL_BUTTON(SDL_BUTTON_LEFT)) {
+
+    if (mouseButtonState & SDL_BUTTON(SDL_BUTTON_LEFT)) {
         try {
             // Map the mouse input to the correct event.
             auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::LEFT_CLICK);
@@ -69,7 +72,7 @@ void Controller::poll()
         }
     }
 
-    if (mouseClicked && SDL_BUTTON(SDL_BUTTON_RIGHT)) {
+    if (mouseButtonState & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
         try {
             // Map the mouse input to the correct event.
             auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::RIGHT_CLICK);
