@@ -15,6 +15,15 @@ void Controller::addMouseListener(ORG_MOUSE_INPUT mouseButton,
     _mouseEventMap.emplace(mouseButton, event);
 }
 
+void Controller::clearMouseListeners(ORG_MOUSE_INPUT mouseButton)
+{
+    if (mouseButton == NULL) {
+        _mouseEventMap.clear();
+    } else {
+        _mouseEventMap.erase(mouseButton);
+    }
+}
+
 void Controller::addKeyListener(std::string key,
                                 ORG_KEY_EVENT strokeType,
                                 KeyEvent event,

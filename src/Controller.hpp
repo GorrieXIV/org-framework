@@ -20,8 +20,9 @@ typedef enum {
 } ORG_MOUSE_EVENT;
 
 typedef enum {
-    LEFT_CLICK,  // 0x00
-    RIGHT_CLICK, // 0x01
+    VOID,        // 0x00
+    LEFT_CLICK,  // 0x01
+    RIGHT_CLICK, // 0x02
 } ORG_MOUSE_INPUT;
 
 typedef enum {
@@ -79,6 +80,11 @@ class Controller
                           ORG_MOUSE_EVENT clickType,
                           MouseEvent event,
                           int priority);
+
+    /// Creates a listener on mouse click
+    /// @param mouseButton: specifies the type of listeners/events to clear.
+    ///                     if NULL, all mouse events will be removed.
+    void clearMouseListeners(ORG_MOUSE_INPUT mouseButton = ORG_MOUSE_INPUT::VOID);
 
     /// Creates a listener on a keystroke
     /// @param mouseButton: specifies the mouse button to listen on
