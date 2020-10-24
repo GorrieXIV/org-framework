@@ -17,7 +17,7 @@ void Controller::addMouseListener(ORG_MOUSE_INPUT mouseButton,
 
 void Controller::clearMouseListeners(ORG_MOUSE_INPUT mouseButton)
 {
-    if (mouseButton == NULL) {
+    if (mouseButton == ORG_MOUSE_INPUT::VOID) {
         _mouseEventMap.clear();
     } else {
         _mouseEventMap.erase(mouseButton);
