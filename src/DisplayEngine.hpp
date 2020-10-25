@@ -98,7 +98,7 @@ class DisplayEngine {
 
     TTF_Font* getFont(const std::string& fontIdentifier);
 
-    // Frees memory and stops
+    // Frees memory and stops the display engine.
     void close();
 
     //FIXME: Make these private!!

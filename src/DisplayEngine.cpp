@@ -17,7 +17,7 @@ DISPLAY_ENGINE_STATUS DisplayEngine::initWindow(const std::string windowTitle) {
     DISPLAY_ENGINE_STATUS retStatus = ENGINE_SUCCESS;
 
     // Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         std::cout << "SDL could not initialize! SDL Error: " << SDL_GetError() << std::endl;
         retStatus = ENGINE_SDL_INIT_ERROR;
     } else {
@@ -54,10 +54,19 @@ DISPLAY_ENGINE_STATUS DisplayEngine::initWindow(const std::string windowTitle) {
                     retStatus = ENGINE_IMAGE_INIT_ERROR;
                 }
 
+                // Initialize TFF font support.
                 if (TTF_Init() == -1) {
                     std::cout << "SDL_ttf could not initialize. SDL_ttf Error: "
                               << TTF_GetError() << std::endl;
                     retStatus = ENGINE_TTF_INIT_ERROR;
+                }
+
+                // Initialize SDL_mixer for audio mixing.
+                if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+                {
+                    std::cout << "SDL_mixer could not initialize! SDL_mixer Error: %s\n"
+                              << Mix_GetError() << std::endl;
+                    retStatus = ENGINE_UNKNOWN_ERROR;
                 }
 
                 // Set the render blend mode to alpha blending.

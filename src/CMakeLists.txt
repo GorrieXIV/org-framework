@@ -11,6 +11,7 @@ set(HEADERS
     Timer.hpp
     Entity.hpp
     Controller.hpp
+    Audio.hpp
     SDL.h
     )
 
@@ -26,6 +27,7 @@ set(SOURCES
     Timer.cpp
     Entity.cpp
     Controller.cpp
+    Audio.cpp
     )
 
 source_group("Headers" FILES ${HEADERS})
@@ -38,4 +40,5 @@ target_link_libraries(orgengine PRIVATE
     -lSDL2
     -lSDL2_image
     -lSDL2_ttf
+    -lSDL2_mixer
     )
