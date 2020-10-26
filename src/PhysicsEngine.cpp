@@ -18,10 +18,11 @@ void PhysicsEngine::checkCollisions()
         for (const auto& B : _entities) {
             if (A->temp_getHitbox() == B->temp_getHitbox()) continue;
             if (collisionDetected(A->temp_getHitbox(), B->temp_getHitbox())) {
-                A->triggerCollision();
-                B->triggerCollision();
+                A->triggerCollision(*B);
+                B->triggerCollision(*A);
             }
         }
+        A->resolvePendingActions();
     }
 }
 

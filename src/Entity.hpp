@@ -48,15 +48,32 @@ class Entity {
                                 hb.height);
     }
 
+    void moveTo(const Vector2& desiredPosition);
+
+    /// Used by the physics engine to finalize movements after is has determined
+    /// that there is no blocking collision.
+    void resolvePendingActions() {
+        if (_movementPending && !_collisionDetected) {
+            _position = _pendingPosition;
+        }
+
+        _movementPending = false;
+        _collisionDetected = false;
+    }
+
     /// Use this function to tell `this` that it collided with another Entity.
-    virtual void triggerCollision() { /* collision detected */ }
+    virtual void triggerCollision(const Entity& collidingEntity) { _collisionDetected = true; }
 
     virtual std::string getStatus() const = 0;
 
   protected:
-    Vector2 _position;
+    Vector2 _position{};
+    Vector2 _pendingPosition{};
     float _width;
     float _height;
+  
+    bool _movementPending = false;
+    bool _collisionDetected = false;
 
     std::vector<Rectangle<float>> _hitboxes{};
 };

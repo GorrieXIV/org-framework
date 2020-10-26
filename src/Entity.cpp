@@ -28,3 +28,9 @@ void Entity::setPosition(float x, float y)
     _position.x = x;
     _position.y = y;
 }
+
+void Entity::moveTo(const Vector2& desiredPosition)
+{
+    _pendingPosition = desiredPosition;
+    _movementPending = true;
+}
