@@ -42,8 +42,9 @@ class Entity {
 
     Rectangle<float> temp_getHitbox() const {
         auto hb = _hitboxes.front();
-        return Rectangle<float>(hb.position.x + _position.x - hb.width / 2,
-                                hb.position.y + _position.y - hb.height / 2,
+        auto position = _movementPending ? _pendingPosition : _position;
+        return Rectangle<float>(hb.position.x + position.x - hb.width / 2,
+                                hb.position.y + position.y - hb.height / 2,
                                 hb.width,
                                 hb.height);
     }
@@ -62,7 +63,9 @@ class Entity {
     }
 
     /// Use this function to tell `this` that it collided with another Entity.
-    virtual void triggerCollision(const Entity& collidingEntity) { _collisionDetected = true; }
+    virtual void triggerCollision(const Entity& collidingEntity) {
+        _collisionDetected = true;
+    }
 
     virtual std::string getStatus() const = 0;
 
