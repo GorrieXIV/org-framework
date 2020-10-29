@@ -102,4 +102,7 @@ class Controller
     std::map<ORG_MOUSE_INPUT, MouseEvent> _mouseEventMap{};
     std::map<int, KeyEvent> _keyEventMap{};
     std::map<std::pair<EntityReference, ORG_MOUSE_INPUT>, MouseEvent> _clickEventMap{};
+
+    bool _leftMouseDownTracker = false;
+    bool _rightMouseDownTracker = false;
 };

@@ -74,7 +74,7 @@ class Entity {
     Vector2 _pendingPosition{};
     float _width;
     float _height;
-  
+
     bool _movementPending = false;
     bool _collisionDetected = false;
 

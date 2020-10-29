@@ -53,42 +53,52 @@ void Controller::poll()
     y -= camera.position.y;
 
     if (mouseButtonState & SDL_BUTTON(SDL_BUTTON_LEFT)) {
-        try {
-            // Map the mouse input to the correct event.
-            auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::LEFT_CLICK);
+        if (!_leftMouseDownTracker) {
+            try {
+                // Map the mouse input to the correct event.
+                auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::LEFT_CLICK);
 
-            // Execute the event.
-            mouseEvent(x, y);
-        } catch (std::out_of_range e) { }
+                // Execute the event.
+                mouseEvent(x, y);
+            } catch (std::out_of_range e) { }
 
-        for (const auto& [entityClickPairing, clickEvent] : _clickEventMap) {
-            // Retrieve entity and mouse button from the std::pair.
-            auto entityReference = std::get<0>(entityClickPairing);
-            auto mouseButton     = std::get<1>(entityClickPairing);
+            for (const auto& [entityClickPairing, clickEvent] : _clickEventMap) {
+                // Retrieve entity and mouse button from the std::pair.
+                auto entityReference = std::get<0>(entityClickPairing);
+                auto mouseButton     = std::get<1>(entityClickPairing);
 
-            if (mouseButton != ORG_MOUSE_INPUT::LEFT_CLICK) {
-                continue;
-            }
+                if (mouseButton != ORG_MOUSE_INPUT::LEFT_CLICK) {
+                    continue;
+                }
 
-            auto entityPosition   = entityReference->getPosition();
-            auto entityDimensions = entityReference->getDimensions();
-            if (entityPosition.x > x - entityDimensions.x &&
-                entityPosition.x < x + entityDimensions.x &&
-                entityPosition.y > y - entityDimensions.y &&
-                entityPosition.y < y + entityDimensions.y) {
-                clickEvent(x, y);
+                auto entityPosition   = entityReference->getPosition();
+                auto entityDimensions = entityReference->getDimensions();
+                if (entityPosition.x > x - entityDimensions.x &&
+                    entityPosition.x < x + entityDimensions.x &&
+                    entityPosition.y > y - entityDimensions.y &&
+                    entityPosition.y < y + entityDimensions.y) {
+                    clickEvent(x, y);
+                }
             }
         }
+        _leftMouseDownTracker = true;
+    } else {
+        _leftMouseDownTracker = false;
     }
 
     if (mouseButtonState & SDL_BUTTON(SDL_BUTTON_RIGHT)) {
-        try {
-            // Map the mouse input to the correct event.
-            auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::RIGHT_CLICK);
+        if (!_rightMouseDownTracker) {
+            try {
+                // Map the mouse input to the correct event.
+                auto mouseEvent = _mouseEventMap.at(ORG_MOUSE_INPUT::RIGHT_CLICK);
 
-            // Execute the event.
-            mouseEvent(x, y);
-        } catch (std::out_of_range e) { }
+                // Execute the event.
+                mouseEvent(x, y);
+            } catch (std::out_of_range e) { }
+        }
+        _rightMouseDownTracker = true;
+    } else {
+        _rightMouseDownTracker = false;
     }
 
     /// Check keyboard state and trigger events.
