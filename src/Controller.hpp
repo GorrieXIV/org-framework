@@ -16,7 +16,8 @@
 
 typedef enum {
     MOUSE_DOWN, // 0x00
-    MOUSE_UP,   // 0x01
+    MOUSE_HOLD, // 0x01
+    MOUSE_UP,   // 0x02
 } ORG_MOUSE_EVENT;
 
 typedef enum {
@@ -26,8 +27,9 @@ typedef enum {
 } ORG_MOUSE_INPUT;
 
 typedef enum {
-    KEY_DOWN,   // 0x00
-    KEY_UP,     // 0x01
+    KEY_DOWN, // 0x00
+    KEY_HOLD, // 0x01
+    KEY_UP,   // 0x02
 } ORG_KEY_EVENT;
 
 const std::map<std::string, int> ORG_SDL_KEY_MAPPING = {
