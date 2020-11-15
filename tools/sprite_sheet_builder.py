@@ -31,6 +31,13 @@ class SheetBuilderMainWindow(QWidget):
         self.resize(800, 600)
         self.setWindowTitle("ORG Engine Sprite Sheet Builder")
 
+        self.imageLoaded = False
+        self.gridSpriteWidth = None
+        self.gridSpriteHeight = None
+        self.gridSpriteColumns = None
+        self.gridSpriteRows = None
+        self.gridSpecified = False
+
         self.openImageButton = QPushButton("Open Image File")
         self.openImageButton.clicked.connect(self.getImageFile)
 
@@ -63,6 +70,7 @@ class SheetBuilderMainWindow(QWidget):
     def getImageFile(self):
         file_name, _ = QFileDialog.getOpenFileName(self, "Open Image File", "./", "Image files (*.jpg *.jpeg *.png *.gif)")
         self.labelImage.setPixmap(QPixmap(file_name))
+        self.imageLoaded = True
 
     def openJsonFile(self):
         dialog = QFileDialog()
@@ -83,12 +91,23 @@ class SheetBuilderMainWindow(QWidget):
     def openGridToolDialog(self):
         dialog = GridToolDialogBox()
         if dialog.exec():
-            width, height, columns, rows = dialog.getInputs()
-            painter = QPainter(self)
-            brush = QBrush(QColor(100, 10, 10, 40))
-            painter.setBrush(brush)
+            gridDimensions = dialog.getInputs()
+            self.gridSpriteWidth = gridDimensions[0]
+            self.gridSpriteHeight = gridDimensions[1]
+            self.gridSpriteColumns = gridDimensions[2]
+            self.gridSpriteRows = gridDimensions[3]
+            self.gridSpecified = True
+
+    def paintEvent(self, e):
+        painter = QPainter(self)
+        brush = QBrush(QColor(100, 10, 10, 40))
+        painter.setBrush(brush)
+
+        if self.imageLoaded and self.gridSpecified:
             try:
-                painter.drawRect(int(0), int(0), int(width), int(height))
+                painter.drawRect(
+                    int(0), int(0), int(self.gridSpriteWidth), int(self.gridSpriteHeight)
+                )
             except ValueError as e:
                 print("Invalid inputs given for grid dimensions.")
 
@@ -125,6 +144,6 @@ class GridToolDialogBox(QDialog):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    demo = SheetBuilderMainWindow()
-    demo.show()
+    sheetBuilder = SheetBuilderMainWindow()
+    sheetBuilder.show()
     sys.exit(app.exec_())
