@@ -68,9 +68,10 @@ class SheetBuilderMainWindow(QWidget):
         self.setLayout(layout)
 
     def getImageFile(self):
-        file_name, _ = QFileDialog.getOpenFileName(self, "Open Image File", "./", "Image files (*.jpg *.jpeg *.png *.gif)")
-        self.labelImage.setPixmap(QPixmap(file_name))
-        self.imageLoaded = True
+        fileName, _ = QFileDialog.getOpenFileName(self, "Open Image File", "./", "Image files (*.jpg *.jpeg *.png *.gif)")
+        if fileName:
+            self.labelImage.setPixmap(QPixmap(fileName))
+            self.imageLoaded = True
 
     def openJsonFile(self):
         dialog = QFileDialog()

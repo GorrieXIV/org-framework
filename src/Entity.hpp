@@ -67,7 +67,14 @@ class Entity {
         _collisionDetected = true;
     }
 
-    virtual std::string getStatus() const = 0;
+    [[nodiscard]] virtual std::string getStatus() const {
+        std::string status{""};
+        status += "-- Current position: (" + std::to_string(_position.x) + ", "
+                                           + std::to_string(_position.y) + ")\n";
+        status += "-- Dimensions (width/height): (" + std::to_string(_width) + ", "
+                                                    + std::to_string(_height) + ")\n";
+        return status;
+    }
 
   protected:
     Vector2 _position{};
