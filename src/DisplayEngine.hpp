@@ -7,6 +7,8 @@
 #include "Texture.hpp"
 #include "Camera.hpp"
 
+#include <nlohmann/json.hpp>
+
 typedef enum {
   ENGINE_SUCCESS,
   ENGINE_FILE_NOT_FOUND,

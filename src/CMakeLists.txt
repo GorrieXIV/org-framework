@@ -41,4 +41,5 @@ target_link_libraries(orgengine PRIVATE
     -lSDL2_image
     -lSDL2_ttf
     -lSDL2_mixer
+    ${CONAN_LIBS}
     )

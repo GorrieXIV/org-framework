@@ -23,6 +23,9 @@ include(cxx)
 set_cxx_ver(14)
 enable_testing()
 
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()
+
 set(INSTALL_BIN_DIR "bin/")
 
 add_subdirectory(src)
