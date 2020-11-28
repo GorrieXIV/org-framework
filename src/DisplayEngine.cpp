@@ -150,6 +150,14 @@ DISPLAY_ENGINE_STATUS DisplayEngine::loadTextureSheetFromFile(std::string sheetN
     SDL_Texture* textureSheet = SDL_CreateTextureFromSurface(renderer, spriteSheet);
     _textureSheets.emplace(sheetName, textureSheet);
 
+    try {
+        std::ifstream jsonStream(sheetFile);
+        auto sheetDescriptionJson = json::parse(jsonStream);
+        _textureSheetDescriptions.emplace(sheetName, sheetDescriptionJson);
+    } catch (...) {
+        return ENGINE_UNKNOWN_ERROR;
+    }
+
     return ENGINE_SUCCESS;
 }
 

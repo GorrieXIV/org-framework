@@ -9,6 +9,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include <fstream>
+
 typedef enum {
   ENGINE_SUCCESS,
   ENGINE_FILE_NOT_FOUND,
@@ -21,6 +23,8 @@ typedef enum {
 } DISPLAY_ENGINE_STATUS;
 
 using namespace orgmath;
+
+using json = nlohmann::json;
 
 using Sprite = SDL_Surface;
 using HardwareTexture = SDL_Texture*;
@@ -116,5 +120,6 @@ class DisplayEngine {
 
     std::map<std::string, SDL_Surface> _spriteSheets;
     std::map<std::string, SDL_Texture*> _textureSheets;
+    std::map<std::string, json> _textureSheetDescriptions;
     std::map<std::string, TTF_Font*> _fonts;
 };
