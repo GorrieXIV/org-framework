@@ -133,7 +133,8 @@ DISPLAY_ENGINE_STATUS DisplayEngine::loadSpriteSheetFromFile(std::string sheetNa
 }
 
 DISPLAY_ENGINE_STATUS DisplayEngine::loadTextureSheetFromFile(std::string sheetName,
-                                                              std::string sheetFile)
+                                                              std::string sheetFile,
+                                                              std::string sheetJsonFile)
 {
     SDL_Surface* spriteSheet = IMG_Load(sheetFile.c_str());
     if (spriteSheet == NULL) {
@@ -150,12 +151,14 @@ DISPLAY_ENGINE_STATUS DisplayEngine::loadTextureSheetFromFile(std::string sheetN
     SDL_Texture* textureSheet = SDL_CreateTextureFromSurface(renderer, spriteSheet);
     _textureSheets.emplace(sheetName, textureSheet);
 
-    try {
-        std::ifstream jsonStream(sheetFile);
-        auto sheetDescriptionJson = json::parse(jsonStream);
-        _textureSheetDescriptions.emplace(sheetName, sheetDescriptionJson);
-    } catch (...) {
-        return ENGINE_UNKNOWN_ERROR;
+    if (sheetJsonFile != "") {
+        try {
+            std::ifstream jsonStream(sheetJsonFile);
+            auto sheetDescriptionJson = json::parse(jsonStream);
+            _textureSheetDescriptions.emplace(sheetName, sheetDescriptionJson);
+        } catch (...) {
+            return ENGINE_UNKNOWN_ERROR;
+        }
     }
 
     return ENGINE_SUCCESS;
@@ -292,9 +295,9 @@ DISPLAY_ENGINE_STATUS DisplayEngine::copySpriteFromSheet(SDL_Texture* out,
     SDL_Surface* croppedSheet = NULL;
     SDL_Surface sheetCopy = _spriteSheets.at(sheetName);
     bool nullWindow = clippingWindow.x == 0
-                 && clippingWindow.y == 0
-                 && clippingWindow.w == 0
-                 && clippingWindow.h == 0;
+                      && clippingWindow.y == 0
+                      && clippingWindow.w == 0
+                      && clippingWindow.h == 0;
     const SDL_Rect* clipPointer = nullWindow ? NULL : &clippingWindow;
     SDL_BlitSurface(&sheetCopy, clipPointer, croppedSheet, NULL);
 
@@ -339,6 +342,24 @@ DISPLAY_ENGINE_STATUS DisplayEngine::loadFontFromFile(const std::string& fontIde
 TTF_Font* DisplayEngine::getFont(const std::string& fontIdentifier)
 {
     return _fonts.at(fontIdentifier);
+}
+
+DisplayRectangle DisplayEngine::getTextureClipById(const std::string& sheetName,
+                                                   const std::string& spriteId)
+{
+    try {
+        auto sheetDescription = _textureSheetDescriptions.at(sheetName);
+        auto spriteDetails = sheetDescription["textures"][spriteId];
+        return {spriteDetails["x_start"],
+                spriteDetails["y_start"],
+                spriteDetails["width"],
+                spriteDetails["height"]};
+    } catch (...) {
+        //FIXME: Implement explicit error handling.
+        throw std::runtime_error("Sheet matching '" + sheetName + "' not found.");
+    }
+
+
 }
 
 void DisplayEngine::close()

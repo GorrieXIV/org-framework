@@ -56,6 +56,14 @@ void TexturedEntity::setTextureFromSpriteSheet(const std::string& sheetName,
     _spriteClip = spriteClip;
 }
 
+void TexturedEntity::setTextureFromSpriteSheet(const std::string& sheetName,
+                                               const std::string& textureId)
+{
+    _textureSheet = sheetName;
+    DisplayRectangle spriteClip = displayEngine.getTextureClipById(sheetName, textureId);
+    _spriteClip = spriteClip;
+}
+
 void TexturedEntity::createTextureFromSpriteSheet(const std::string& sheetName)
 {
     _spriteClip = DisplayRectangle(0, 0, 0, 0);

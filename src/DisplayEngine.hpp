@@ -10,6 +10,7 @@
 #include <nlohmann/json.hpp>
 
 #include <fstream>
+#include <stdexcept>
 
 typedef enum {
   ENGINE_SUCCESS,
@@ -53,7 +54,9 @@ class DisplayEngine {
     DISPLAY_ENGINE_STATUS loadSpriteSheetFromFile(std::string sheetName, std::string sheetFile);
 
     /// Load TEXTURE sheet <sheetName> from <sheetFile>
-    DISPLAY_ENGINE_STATUS loadTextureSheetFromFile(std::string sheetName, std::string sheetFile);
+    DISPLAY_ENGINE_STATUS loadTextureSheetFromFile(std::string sheetName,
+                                                   std::string sheetFile,
+                                                   std::string sheetJsonFile = "");
 
     ///
     DISPLAY_ENGINE_STATUS setTextureClips();
@@ -103,6 +106,9 @@ class DisplayEngine {
                                            const int& fontSize = 12);
 
     TTF_Font* getFont(const std::string& fontIdentifier);
+
+    DisplayRectangle getTextureClipById(const std::string& sheetName,
+                                        const std::string& spriteId);
 
     // Frees memory and stops the display engine.
     void close();

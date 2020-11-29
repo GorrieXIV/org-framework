@@ -26,6 +26,11 @@ class TexturedEntity : public Entity {
     void setTextureFromSpriteSheet(const std::string& sheetName,
                                    const DisplayRectangle& spriteClip);
 
+    /// Share a surface owned by the display engine,
+    /// referenced by id found in the JSON.
+    void setTextureFromSpriteSheet(const std::string& sheetName,
+                                   const std::string& textureId);
+
     /// Sets a new sprite clip, changing the sprite displayed for the entity.
     void updateSprite(const DisplayRectangle& spriteClip);
 
