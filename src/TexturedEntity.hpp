@@ -26,13 +26,16 @@ class TexturedEntity : public Entity {
     void setTextureFromSpriteSheet(const std::string& sheetName,
                                    const DisplayRectangle& spriteClip);
 
-    /// Share a surface owned by the display engine,
-    /// referenced by id found in the JSON.
+    /// Share a surface referenced by id found in the sheet JSON.
     void setTextureFromSpriteSheet(const std::string& sheetName,
                                    const std::string& textureId);
 
     /// Sets a new sprite clip, changing the sprite displayed for the entity.
     void updateSprite(const DisplayRectangle& spriteClip);
+
+    /// Sets a new sprite clip based on a sprite ID in the sheet JSON.
+    /// Throws an exception if JSON for this sheet has not been loaded.
+    void updateSprite(const std::string& spriteId);
 
     void createTextureFromSpriteSheet(const std::string& sheetName);
 
@@ -40,7 +43,8 @@ class TexturedEntity : public Entity {
     //void copyTextureFromSpriteSheet(std::string sheetName)
 
   protected:
-    std::string _textureSheet{};
-    Texture _texture;
+    std::string      _textureSheet{};
+    Texture          _texture;
     DisplayRectangle _spriteClip;
+    std::string      _spriteId;
 };

@@ -108,7 +108,8 @@ class DisplayEngine {
     TTF_Font* getFont(const std::string& fontIdentifier);
 
     DisplayRectangle getTextureClipById(const std::string& sheetName,
-                                        const std::string& spriteId);
+                                        const std::string& spriteId)
+                                        noexcept(false);
 
     // Frees memory and stops the display engine.
     void close();
