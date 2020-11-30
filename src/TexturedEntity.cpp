@@ -37,7 +37,7 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
     }
 
     if (debug_hitboxes) {
-        for (const auto& hitbox : _hitboxes) {
+        for (const auto& [hitbox, isBlocking] : _hitboxes) {
             //TODO: Build a cleaner means of casting between different Rectangle types.
             auto worldPosHitbox = relativeToWorldPos(hitbox);
             auto displayPositionHitbox = Rectangle<int>(static_cast<int>(worldPosHitbox.position.x),

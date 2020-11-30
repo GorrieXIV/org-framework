@@ -10,6 +10,9 @@
 
 using namespace orgmath;
 
+// Hitboxes stored as <Rect, isBlocking>
+using Hitbox = std::pair<Rectangle<float>, bool>;
+
 /* ENTITY CLASS ------------------------------------------- */
 class Entity {
   public:
@@ -44,7 +47,7 @@ class Entity {
         if (_hitboxes.size() == 0) {
             return Rectangle<float>(0, 0, 0, 0);
         } else {
-            auto hb = _hitboxes.front();
+            auto hb = _hitboxes.front().first;
             auto position = _movementPending ? _pendingPosition : _position;
             return Rectangle<float>(hb.position.x + position.x - hb.width / 2,
                                     hb.position.y + position.y - hb.height / 2,
@@ -80,6 +83,8 @@ class Entity {
         return status;
     }
 
+    std::string type = "";
+
   protected:
     Vector2 _position{};
     Vector2 _pendingPosition{};
@@ -89,5 +94,5 @@ class Entity {
     bool _movementPending = false;
     bool _collisionDetected = false;
 
-    std::vector<Rectangle<float>> _hitboxes{};
+    std::vector<Hitbox> _hitboxes{};
 };
