@@ -71,6 +71,8 @@ class Controller
 
     void addEventOnDragOver();
 
+    void clearClickListeners(ORG_MOUSE_INPUT mouseButton = ORG_MOUSE_INPUT::VOID);
+
     /// Creates a listener on mouse click
     /// @param mouseButton: specifies the mouse button to listen on
     /// @param clickType:   specifies the click type to listen on

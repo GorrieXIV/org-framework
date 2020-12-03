@@ -41,6 +41,16 @@ void Controller::addEventOnClick(Entity& entity,
     _clickEventMap.emplace(entityClickPairing, event);
 }
 
+void Controller::clearClickListeners(ORG_MOUSE_INPUT mouseButton)
+{
+    if (mouseButton == ORG_MOUSE_INPUT::VOID) {
+        _clickEventMap.clear();
+    } else {
+        //FIXME: Implement controllled clearing of different mappings.
+        _clickEventMap.clear();
+    }
+}
+
 void Controller::poll()
 {
     SDL_PumpEvents();
@@ -63,6 +73,7 @@ void Controller::poll()
             } catch (std::out_of_range e) { }
 
             for (const auto& [entityClickPairing, clickEvent] : _clickEventMap) {
+                std::cout << "click event mapping found for: " << (*(entityClickPairing.first.get())).getStatus() << std::endl;
                 // Retrieve entity and mouse button from the std::pair.
                 auto entityReference = std::get<0>(entityClickPairing);
                 auto mouseButton     = std::get<1>(entityClickPairing);
