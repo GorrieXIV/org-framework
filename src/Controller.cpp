@@ -73,7 +73,6 @@ void Controller::poll()
             } catch (std::out_of_range e) { }
 
             for (const auto& [entityClickPairing, clickEvent] : _clickEventMap) {
-                std::cout << "click event mapping found for: " << (*(entityClickPairing.first.get())).getStatus() << std::endl;
                 // Retrieve entity and mouse button from the std::pair.
                 auto entityReference = std::get<0>(entityClickPairing);
                 auto mouseButton     = std::get<1>(entityClickPairing);
