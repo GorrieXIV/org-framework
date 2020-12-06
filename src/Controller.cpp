@@ -37,17 +37,23 @@ void Controller::addEventOnClick(Entity& entity,
                                  MouseEvent event)
 {
     auto entityReference = EntityReference(&entity);
-    std::pair<EntityReference, ORG_MOUSE_INPUT> entityClickPairing{entityReference, mouseButton};
-    _clickEventMap.emplace(entityClickPairing, event);
+
+    if (mouseButton == ORG_MOUSE_INPUT::LEFT_CLICK) {
+        _leftClickEventMap.emplace(entityReference, event);
+    } else if (mouseButton == ORG_MOUSE_INPUT::RIGHT_CLICK) {
+        _rightClickEventMap.emplace(entityReference, event);
+    }
 }
 
 void Controller::clearClickListeners(ORG_MOUSE_INPUT mouseButton)
 {
-    if (mouseButton == ORG_MOUSE_INPUT::VOID) {
-        _clickEventMap.clear();
+    if (mouseButton == ORG_MOUSE_INPUT::LEFT_CLICK) {
+        _leftClickEventMap.clear();
+    } else if (mouseButton == ORG_MOUSE_INPUT::RIGHT_CLICK) {
+        _rightClickEventMap.clear();
     } else {
-        //FIXME: Implement controllled clearing of different mappings.
-        _clickEventMap.clear();
+        _leftClickEventMap.clear();
+        _rightClickEventMap.clear();
     }
 }
 
@@ -72,15 +78,7 @@ void Controller::poll()
                 mouseEvent(x, y);
             } catch (std::out_of_range e) { }
 
-            for (const auto& [entityClickPairing, clickEvent] : _clickEventMap) {
-                // Retrieve entity and mouse button from the std::pair.
-                auto entityReference = std::get<0>(entityClickPairing);
-                auto mouseButton     = std::get<1>(entityClickPairing);
-
-                if (mouseButton != ORG_MOUSE_INPUT::LEFT_CLICK) {
-                    continue;
-                }
-
+            for (const auto& [entityReference, clickEvent] : _leftClickEventMap) {
                 auto entityPosition   = entityReference->getPosition();
                 auto entityDimensions = entityReference->getDimensions();
                 if (entityPosition.x > x - entityDimensions.x &&
@@ -105,6 +103,17 @@ void Controller::poll()
                 // Execute the event.
                 mouseEvent(x, y);
             } catch (std::out_of_range e) { }
+
+            for (const auto& [entityReference, clickEvent] : _rightClickEventMap) {
+                auto entityPosition   = entityReference->getPosition();
+                auto entityDimensions = entityReference->getDimensions();
+                if (entityPosition.x > x - entityDimensions.x &&
+                    entityPosition.x < x + entityDimensions.x &&
+                    entityPosition.y > y - entityDimensions.y &&
+                    entityPosition.y < y + entityDimensions.y) {
+                    clickEvent(x, y);
+                }
+            }
         }
         _rightMouseDownTracker = true;
     } else {
