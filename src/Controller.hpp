@@ -65,7 +65,7 @@ class Controller
     void poll();
 
     /// Ties clicking of a particular game object to an event
-    void addEventOnClick(Entity& entity,
+    void addEventOnClick(std::shared_ptr<Entity> entity,
                          const ORG_MOUSE_INPUT mouseButton,
                          MouseEvent event);
 

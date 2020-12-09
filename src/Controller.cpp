@@ -32,12 +32,10 @@ void Controller::addKeyListener(std::string key,
     _keyEventMap.emplace(ORG_SDL_KEY_MAPPING.at(key), event);
 }
 
-void Controller::addEventOnClick(Entity& entity,
+void Controller::addEventOnClick(std::shared_ptr<Entity> entityReference,
                                  const ORG_MOUSE_INPUT mouseButton,
                                  MouseEvent event)
 {
-    auto entityReference = EntityReference(&entity);
-
     if (mouseButton == ORG_MOUSE_INPUT::LEFT_CLICK) {
         _leftClickEventMap.emplace(entityReference, event);
     } else if (mouseButton == ORG_MOUSE_INPUT::RIGHT_CLICK) {
