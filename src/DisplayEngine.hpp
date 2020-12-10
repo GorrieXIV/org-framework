@@ -105,6 +105,9 @@ class DisplayEngine {
                                            const std::string& ttfFile,
                                            const int& fontSize = 12);
 
+    /// Creates and invokes a custom mouse cursor.
+    DISPLAY_ENGINE_STATUS setMouseCursor(const std::string& bitmapFile);
+
     TTF_Font* getFont(const std::string& fontIdentifier);
 
     DisplayRectangle getTextureClipById(const std::string& sheetName,
