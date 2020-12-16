@@ -106,7 +106,7 @@ class DisplayEngine {
                                            const int& fontSize = 12);
 
     /// Creates and invokes a custom mouse cursor.
-    DISPLAY_ENGINE_STATUS setMouseCursor(const std::string& bitmapFile);
+    DISPLAY_ENGINE_STATUS setMouseCursor(const std::string& imageFile);
 
     TTF_Font* getFont(const std::string& fontIdentifier);
 
@@ -128,8 +128,12 @@ class DisplayEngine {
     /// Initialize the SDL window.
     DISPLAY_ENGINE_STATUS initializeWindow();
 
+    Uint32 getSurfacePixel(SDL_Surface* surface, int x, int y) const;
+
     std::map<std::string, SDL_Surface> _spriteSheets;
     std::map<std::string, SDL_Texture*> _textureSheets;
     std::map<std::string, json> _textureSheetDescriptions;
     std::map<std::string, TTF_Font*> _fonts;
+
+    SDL_Cursor* customCursor = NULL;
 };

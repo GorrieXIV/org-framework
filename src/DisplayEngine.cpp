@@ -123,8 +123,7 @@ DISPLAY_ENGINE_STATUS DisplayEngine::loadSpriteSheetFromFile(std::string sheetNa
     } else {
         // Set color key image of the sheet to white.
         SDL_SetColorKey(sheetSurface, SDL_TRUE,
-                        SDL_MapRGB(sheetSurface->format,
-                        0xFF, 0xFF, 0xFF));
+                        SDL_MapRGB(sheetSurface->format, 0xFF, 0xFF, 0xFF));
     }
 
     _spriteSheets.emplace(sheetName, *sheetSurface);
@@ -394,4 +393,73 @@ void DisplayEngine::close()
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
+}
+
+DISPLAY_ENGINE_STATUS DisplayEngine::setMouseCursor(const std::string& imageFile)
+{
+    auto cursorImage = IMG_Load(imageFile.c_str());
+    int hx = 8; int hy = 8;
+    int w, x, y;
+    Uint8 *data, *mask, *d, *m, r, g, b;
+    Uint32 color;
+
+    w = (cursorImage->w + 7) / 8;
+    data = (Uint8*)alloca(w * cursorImage->h * 2);
+
+    if (data == NULL) { return DISPLAY_ENGINE_STATUS::ENGINE_UNKNOWN_ERROR; }
+
+    memset(data, 0, w * cursorImage->h * 2);
+    mask = data + w * cursorImage->h;
+    if (SDL_MUSTLOCK(cursorImage)) { SDL_LockSurface(cursorImage); }
+
+    for (y = 0; y < cursorImage->h; y++) {
+        d = data + y * w;
+        m = mask + y * w;
+        for (x = 0; x < cursorImage->w; x++) {
+            color = getSurfacePixel(cursorImage, x, y);
+
+            Uint32 colorKey = SDL_MapRGB(cursorImage->format, 0xFF, 0xFF, 0xFF);
+            if (color != colorKey) {
+                SDL_GetRGB(color, cursorImage->format, &r, &g, &b);
+                color = (r + g + b) / 3;
+                m[x / 8] |= 128 >> (x & 7);
+                if (color < 128) { d[x / 8] |= 128 >> (x & 7); }
+            }
+        }
+    }
+
+    // Unlock cursor image if necessary.
+    if (SDL_MUSTLOCK(cursorImage)) { SDL_UnlockSurface(cursorImage); }
+
+    // Finally, create the SDL cursor and set it.
+    customCursor = SDL_CreateCursor(data, mask, w, cursorImage->h, 0, 0);
+    SDL_SetCursor(customCursor);
+}
+
+Uint32 DisplayEngine::getSurfacePixel(SDL_Surface* surface, int x, int y) const
+{
+    int bpp = surface->format->BytesPerPixel;
+    /* Here p is the address to the pixel we want to retrieve */
+    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+
+    switch (bpp) {
+    case 1:
+        return *p;
+        break;
+    case 2:
+        return *(Uint16 *)p;
+        break;
+    case 3:
+        if (SDL_BYTEORDER == SDL_BIG_ENDIAN) {
+            return p[0] << 16 | p[1] << 8 | p[2]; }
+        else {
+            return p[0] | p[1] << 8 | p[2] << 16;
+        }
+        break;
+    case 4:
+        return *(Uint32 *)p;
+        break;
+    default:
+        return 0;
+    }
 }
