@@ -9,9 +9,9 @@ matrix:
       before_install: sudo ./bin/install_deps.sh
 
     # Apple OSC LLVM
-    - os: osx
-      compiler: clang
-      before_install: ./bin/install_deps.sh
+    #- os: osx
+    #  compiler: clang
+    #  before_install: ./bin/install_deps.sh
 
 notifications:
   email: false
