@@ -434,6 +434,8 @@ DISPLAY_ENGINE_STATUS DisplayEngine::setMouseCursor(const std::string& imageFile
     // Finally, create the SDL cursor and set it.
     customCursor = SDL_CreateCursor(data, mask, w, cursorImage->h, 0, 0);
     SDL_SetCursor(customCursor);
+
+    return DISPLAY_ENGINE_STATUS::ENGINE_SUCCESS;
 }
 
 Uint32 DisplayEngine::getSurfacePixel(SDL_Surface* surface, int x, int y) const
