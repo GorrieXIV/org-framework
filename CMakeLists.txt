@@ -23,8 +23,12 @@ include(cxx)
 set_cxx_ver(14)
 enable_testing()
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+if(USE_LOCAL_LIBS)
+    add_subdirectory(json)
+else()
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    conan_basic_setup()
+endif()
 
 set(INSTALL_BIN_DIR "bin/")
 

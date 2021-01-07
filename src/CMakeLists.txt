@@ -41,5 +41,10 @@ target_link_libraries(orgengine PRIVATE
     -lSDL2_image
     -lSDL2_ttf
     -lSDL2_mixer
-    ${CONAN_LIBS}
     )
+
+if(USE_LOCAL_LIBS)
+    target_link_libraries(orgengine PRIVATE nlohmann_json)
+else()
+    target_link_libraries(orgengine PRIVATE ${CONAN_LIBS})
+endif()
