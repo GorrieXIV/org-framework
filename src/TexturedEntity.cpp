@@ -15,6 +15,10 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
                                                  static_cast<int>(_position.y),
                                                  static_cast<int>(_width),
                                                  static_cast<int>(_height));
+    if (_renderAnchor == RENDER_ANCHOR::CENTER) {
+        drawQuad.position.x -= _width / 2;
+        drawQuad.position.y -= _height / 2;
+    }
     displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad);
 
     if (debug_worldPosition) {

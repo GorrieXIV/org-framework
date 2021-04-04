@@ -7,6 +7,11 @@
 #include "DisplayEngine.hpp"
 #include "Texture.hpp"
 
+typedef enum {
+    CENTER,
+    TOPLEFT
+} RENDER_ANCHOR;
+
 /* * * * * * * * * * * * * * * *
  * *  TEXTURED ENTITY CLASS  * *
  * * * * * * * * * * * * * * * */
@@ -47,4 +52,6 @@ class TexturedEntity : public Entity {
     Texture          _texture;
     DisplayRectangle _spriteClip;
     std::string      _spriteId;
+
+    RENDER_ANCHOR _renderAnchor = RENDER_ANCHOR::CENTER;
 };

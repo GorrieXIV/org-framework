@@ -223,8 +223,8 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
         SDL_Rect* drawCopy = &t2;
         if (drawQuad.isNull()) { drawCopy = NULL; }
 
-        drawCopy->x -= (drawQuad.width / 2 + camera.position.x);
-        drawCopy->y += (camera.position.y - drawQuad.height / 2);
+        drawCopy->x -= camera.position.x;
+        drawCopy->y += camera.position.y;
 
         SDL_RenderCopy(renderer,
                        _textureSheets.at(sheetName),
