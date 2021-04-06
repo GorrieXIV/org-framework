@@ -26,7 +26,7 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
                                    + "," + std::to_string(_position.y) + "]";
         FontTexture positionLabel = FontTexture();
         try {
-            positionLabel.loadFromRenderedText(displayEngine.getFont("lazy"),
+            positionLabel.loadFromRenderedText(displayEngine.getFont("retro"),
                                                entityPosition,
                                                {0xFF, 0xFF, 0xFF},
                                                displayEngine.renderer);

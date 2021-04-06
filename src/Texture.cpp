@@ -17,34 +17,28 @@ bool Texture::loadFromFile(std::string path)
 
     //Load image at specified path
     SDL_Surface* loadedSurface = IMG_Load(path.c_str());
-    if(loadedSurface == NULL)
-    {
-      std::cout << "Unable to load image " << path.c_str()
-                << "! SDL_image Error: " << IMG_GetError() << std::endl;
-    }
-    else
-    {
-      //Color key image
-      SDL_SetColorKey(loadedSurface, SDL_TRUE,
-                      SDL_MapRGB(loadedSurface->format,
-                      0xFF, 0xFF, 0xFF));
+    if(loadedSurface == NULL) {
+        std::cout << "Unable to load image " << path.c_str()
+                  << "! SDL_image Error: " << IMG_GetError() << std::endl;
+    } else {
+        //Color key image
+        SDL_SetColorKey(loadedSurface, SDL_TRUE,
+                        SDL_MapRGB(loadedSurface->format,
+                        0xFF, 0xFF, 0xFF));
 
-      //Create texture from surface pixels
-      newTexture = SDL_CreateTextureFromSurface(displayEngine.renderer, loadedSurface);
-      if( newTexture == NULL )
-      {
-        std::cout << "Unable to create texture from " << path.c_str()
-                  << "! SDL Error: " << SDL_GetError() << std::endl;
-      }
-      else
-      {
-        //Get image dimensions
-        _width = loadedSurface->w;
-        _height = loadedSurface->h;
-      }
+        //Create texture from surface pixels
+        newTexture = SDL_CreateTextureFromSurface(displayEngine.renderer, loadedSurface);
+        if(newTexture == NULL) {
+            std::cout << "Unable to create texture from " << path.c_str()
+                      << "! SDL Error: " << SDL_GetError() << std::endl;
+        } else {
+            //Get image dimensions
+            _width = loadedSurface->w;
+            _height = loadedSurface->h;
+        }
 
-      //Get rid of old loaded surface
-      SDL_FreeSurface(loadedSurface);
+        //Get rid of old loaded surface
+        SDL_FreeSurface(loadedSurface);
     }
 
     //Return success
