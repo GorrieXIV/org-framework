@@ -3,7 +3,7 @@ OrgEngine - the Origins Realtime Game Engine
 
 ## Installing Dependencies
 
-1. Execute `sudo bin/install_deps.sh` on linux-based systems, or simply `./bin/install_deps.sh` on MacOS, to install the project dependencies.
+1. Execute `sudo bash bin/install_deps.sh` on linux-based systems, or simply `./bin/install_deps.sh` on MacOS, to install the project dependencies.
 
 ## Instructions for Contributing
 
