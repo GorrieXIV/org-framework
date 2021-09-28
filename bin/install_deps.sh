@@ -4,14 +4,14 @@
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
         # GNU/Linux
-        echo "Installing libraries: libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libboost-all-dev..."
+        echo "Installing libraries: libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev libboost-all-dev..."
         apt-get update;
-        apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libboost-all-dev -y;
+        apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev libboost-all-dev -y;
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OS
-        echo "Installing libraries: cmake sdl2 sdl2_image sdl2_ttf boost..."
+        echo "Installing libraries: cmake sdl2 sdl2_image sdl2_ttf sdl2_mixer boost..."
         if [[ $(which brew) ]]; then
-            brew install cmake sdl2 sdl2_image sdl2_ttf boost || true;
+            brew install cmake sdl2 sdl2_image sdl2_ttf sdl2_mixer boost || true;
         elif [[ $(which port) ]]; then
             echo "MacPorts was detected but is not yet supported, please install brew."
         else
