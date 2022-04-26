@@ -15,4 +15,14 @@ typedef struct {
     float y;
 } vec2_f32;
 
-using Vector2 = vec2_f32;
+class Vector2 {
+  public:
+    float x;
+    float y;
+
+    Vector2& operator+=(const Vector2& rhs) {
+        this->x += rhs.x;
+        this->y += rhs.y;
+        return *this;
+    }
+};

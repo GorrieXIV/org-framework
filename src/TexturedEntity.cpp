@@ -8,9 +8,12 @@ TexturedEntity::~TexturedEntity() {}
 
 void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
 {
-    if (_spriteClip.isNull()) {
+    // If the entity has no sprite, and debug rendering isn't being used, simply return.
+    if (_spriteClip.isNull() && !(debug_worldPosition || debug_hitboxes)) {
         return;
     }
+
+    // Render the entities sprite.
     DisplayRectangle drawQuad = DisplayRectangle(static_cast<int>(_position.x),
                                                  static_cast<int>(_position.y),
                                                  static_cast<int>(_width),
@@ -21,6 +24,7 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
     }
     displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad);
 
+    // Render the entities position coordinates, if requested.
     if (debug_worldPosition) {
         std::string entityPosition = "[" + std::to_string(_position.x)
                                    + "," + std::to_string(_position.y) + "]";
@@ -40,6 +44,7 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
         }
     }
 
+    // Render the entities hitboxes, if requested.
     if (debug_hitboxes) {
         for (const auto& [hitbox, isBlocking] : _hitboxes) {
             //TODO: Build a cleaner means of casting between different Rectangle types.
