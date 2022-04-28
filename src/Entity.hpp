@@ -58,6 +58,8 @@ class Entity {
 
     void moveTo(const Vector2& desiredPosition);
 
+    void move(const Vector2& desiredMovement);
+
     /// Used by the physics engine to finalize movements after is has determined
     /// that there is no blocking collision.
     void resolvePendingActions() {

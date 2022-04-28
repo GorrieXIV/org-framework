@@ -25,4 +25,10 @@ class Vector2 {
         this->y += rhs.y;
         return *this;
     }
+
+    Vector2 operator+(const Vector2& rhs) {
+        float newX = this->x + rhs.x;
+        float newY = this->y + rhs.y;
+        return {newX, newY};
+    }
 };
