@@ -86,6 +86,8 @@ class Entity {
     }
 
     std::string type = "";
+    std::string id = "";
+    bool frameProcessed = false;
 
   protected:
     Vector2 _position{};

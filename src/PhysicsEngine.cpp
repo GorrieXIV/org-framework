@@ -16,6 +16,10 @@ void PhysicsEngine::checkCollisions()
 {
     for (const auto& A : _entities) {
         for (const auto& B : _entities) {
+            // Skip this entity if it has already been fully processed.
+            if (B->frameProcessed) {
+                continue;
+            }
             auto hitboxA = A->temp_getHitbox();
             auto hitboxB = B->temp_getHitbox();
 
@@ -31,7 +35,13 @@ void PhysicsEngine::checkCollisions()
                 B->triggerCollision(*A);
             }
         }
+
+        A->frameProcessed = true;
         A->resolvePendingActions();
+    }
+
+    for (const auto& A : _entities) {
+        A->frameProcessed = false;
     }
 }
 
