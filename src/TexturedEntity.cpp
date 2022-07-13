@@ -24,6 +24,13 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
     }
     displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad);
 
+    // Draw child textures.
+    for (const auto& [texture, quad] : _childTextures) {
+        texture->render(_position.x + quad.position.x,
+                        _position.y + quad.position.y,
+                        {0, 0, 0, 0});
+    }
+
     // Render the entities position coordinates, if requested.
     if (debug_worldPosition) {
         std::string entityPosition = "[" + std::to_string(_position.x)

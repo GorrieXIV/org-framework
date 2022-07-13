@@ -48,10 +48,12 @@ class TexturedEntity : public Entity {
     //void copyTextureFromSpriteSheet(std::string sheetName)
 
   protected:
-    std::string      _textureSheet{};
-    Texture          _texture;
-    DisplayRectangle _spriteClip;
-    std::string      _spriteId;
+    std::string       _textureSheet{};
+    Texture           _texture;
+    DisplayRectangle  _spriteClip;
+    std::string       _spriteId;
+    std::vector<std::pair<std::shared_ptr<Texture>, DisplayRectangle>> _childTextures{};
+
 
     RENDER_ANCHOR _renderAnchor = RENDER_ANCHOR::CENTER;
 };
