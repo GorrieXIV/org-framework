@@ -60,6 +60,8 @@ class Entity {
 
     void move(const Vector2& desiredMovement);
 
+    void rotate(const double degreesRotated);
+
     /// Used by the physics engine to finalize movements after is has determined
     /// that there is no blocking collision.
     void resolvePendingActions() {
@@ -94,6 +96,7 @@ class Entity {
     Vector2 _pendingPosition{};
     float _width;
     float _height;
+    double _angle = 0;
 
     bool _movementPending = false;
     bool _collisionDetected = false;

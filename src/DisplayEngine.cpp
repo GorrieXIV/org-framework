@@ -206,7 +206,8 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(SDL_Texture* texture,
 // THE drawTextureAt FUNCTIONS NEED TO BE REFACTORED
 DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
                                                    const DisplayRectangle& clipQuad,
-                                                   const DisplayRectangle& drawQuad)
+                                                   const DisplayRectangle& drawQuad,
+                                                   const double angle)
 {
     try {
         SDL_Rect t1 = {static_cast<int>(clipQuad.position.x),
@@ -226,10 +227,13 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
         drawCopy->x -= camera.position.x;
         drawCopy->y += camera.position.y;
 
-        SDL_RenderCopy(renderer,
-                       _textureSheets.at(sheetName),
-                       clipCopy,
-                       drawCopy);
+        SDL_RenderCopyEx(renderer,
+                         _textureSheets.at(sheetName),
+                         clipCopy,
+                         drawCopy,
+                         angle,
+                         NULL,
+                         SDL_FLIP_NONE);
 
         return ENGINE_SUCCESS;
     } catch (...) {

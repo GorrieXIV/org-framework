@@ -22,7 +22,7 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
         drawQuad.position.x -= _width / 2;
         drawQuad.position.y -= _height / 2;
     }
-    displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad);
+    displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad, _angle);
 
     // Draw child textures.
     for (const auto& [texture, quad] : _childTextures) {
@@ -33,16 +33,16 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
 
     // Render the entities position coordinates, if requested.
     if (debug_worldPosition) {
-        std::string entityPosition = "[" + std::to_string(_position.x)
-                                   + "," + std::to_string(_position.y) + "]";
-        FontTexture positionLabel = FontTexture();
         try {
+            std::string entityPosition = "[" + std::to_string(_position.x)
+                                       + "," + std::to_string(_position.y) + "]";
+            FontTexture positionLabel = FontTexture();
             positionLabel.loadFromRenderedText(displayEngine.getFont("retro"),
                                                entityPosition,
-                                               {0xFF, 0xFF, 0xFF},
+                                               {0x00, 0x00, 0xFF},
                                                displayEngine.renderer);
 
-            positionLabel.render(static_cast<int>(_position.x - _width / 2),
+            positionLabel.render(static_cast<int>(_position.x - _width / 2 + 50),
                                  static_cast<int>(_position.y - _height / 2),
                                  {0, 0, 0, 0});
         } catch (...) {

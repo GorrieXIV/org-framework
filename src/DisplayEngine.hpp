@@ -76,7 +76,8 @@ class DisplayEngine {
 
     DISPLAY_ENGINE_STATUS drawTextureAt(const std::string& textureSheet,
                                         const DisplayRectangle& clipQuad,
-                                        const DisplayRectangle& drawQuad);
+                                        const DisplayRectangle& drawQuad,
+                                        const double angle);
 
     DISPLAY_ENGINE_STATUS drawSpriteAt(const std::string& spriteSheet,
                                        const DisplayRectangle& clipQuad,
