@@ -274,6 +274,7 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawSpriteAt(const std::string& sheetName,
     }
 }
 
+// Draw rectangle.
 DISPLAY_ENGINE_STATUS DisplayEngine::drawRectangle(const DisplayRectangle& rect,
                                                    const std::string& colour)
 {
@@ -289,6 +290,41 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawRectangle(const DisplayRectangle& rect,
 
     return DISPLAY_ENGINE_STATUS::ENGINE_SUCCESS;
 }
+
+// Draw arbitrary polygon.
+DISPLAY_ENGINE_STATUS DisplayEngine::drawPolygon(const std::vector<Vector2> vertices)
+{
+    Vector2 firstVertex = Vector2::nullVector();
+    Vector2 storedVertex = Vector2::nullVector();
+
+    // Set drawing colour to red.
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0x77);
+
+    // Iterate between vertices while drawing points between them.
+    for (const auto& vertex : vertices) {
+        // Store the first vertex so that we can close the shape later.
+        if (storedVertex.isNull) {
+            firstVertex  = vertex;
+            storedVertex = vertex;
+            continue;
+        }
+
+        SDL_RenderDrawLine(renderer,
+                           storedVertex.x,
+                           storedVertex.y,
+                           vertex.x,
+                           vertex.y);
+        storedVertex = vertex;
+    }
+
+    // Close the polygon.
+    SDL_RenderDrawLine(renderer,
+                       storedVertex.x,
+                       storedVertex.y,
+                       firstVertex.x,
+                       firstVertex.y);
+}
+
 
 // Texture Clip Cloning approach.
 DISPLAY_ENGINE_STATUS DisplayEngine::copySpriteFromSheet(SDL_Texture* out,

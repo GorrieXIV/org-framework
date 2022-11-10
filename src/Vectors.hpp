@@ -19,6 +19,11 @@ class Vector2 {
   public:
     float x;
     float y;
+    bool isNull = false;
+
+    static Vector2 nullVector() {
+        return Vector2{0, 0, true};
+    }
 
     Vector2& operator+=(const Vector2& rhs) {
         this->x += rhs.x;

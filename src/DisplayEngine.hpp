@@ -83,9 +83,12 @@ class DisplayEngine {
                                        const DisplayRectangle& clipQuad,
                                        const DisplayRectangle& drawQuad);
 
-    /// Draws a filled-in rectangle `rect` in colour `colour`
+    /// Draws a filled-in rectangle `rect` in colour `colour`.
     DISPLAY_ENGINE_STATUS drawRectangle(const DisplayRectangle& rect,
                                         const std::string& colour = "red");
+
+    /// Draws an outline of a polygon specified by points `vertices`.
+    DISPLAY_ENGINE_STATUS drawPolygon(const std::vector<Vector2> vertices);
 
     /// Copies the content of a region of a stored sprite sheet to `out`.
     /// [ CURRENTLY BROKEN ]
