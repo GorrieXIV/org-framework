@@ -31,9 +31,21 @@ class Vector2 {
         return *this;
     }
 
-    Vector2 operator+(const Vector2& rhs) {
+    Vector2& operator-=(const Vector2& rhs) {
+        this->x -= rhs.x;
+        this->y -= rhs.y;
+        return *this;
+    }
+
+    Vector2 operator+(const Vector2& rhs) const {
         float newX = this->x + rhs.x;
         float newY = this->y + rhs.y;
+        return {newX, newY};
+    }
+
+    Vector2 operator-(const Vector2& rhs) const {
+        float newX = this->x - rhs.x;
+        float newY = this->y - rhs.y;
         return {newX, newY};
     }
 };
