@@ -42,30 +42,17 @@ class Collider {
     /// Set the entities position with an x and a y coordinate.
     void setPosition(float x, float y);
 
-    void setDimensions(Vector2 dimension);
-
-    void setWidth(float width) { _width = width; }
-
-    void setHeight(float height) { _height = height; }
-
-    Rectangle<float> relativeToWorldPos(const Rectangle<float>& rect);
-
     void moveTo(const Vector2& desiredPosition);
 
     void move(const Vector2& desiredMovement);
 
-    void rotate(const double degreesRotated);
+    // Render the collider to screen.
+    // virtual void render() = 0;
 
-    [[nodiscard]] virtual std::string getStatus() const {
-        std::string status{""};
-        status += "-- Current position: (" + std::to_string(_position.x) + ", "
-                                           + std::to_string(_position.y) + ")\n";
-        status += "-- Dimensions (width/height): (" + std::to_string(_width) + ", "
-                                                    + std::to_string(_height) + ")\n";
-        return status;
-    }
+    // TODO: Implement rotation in base classes.
+    // virtual void rotate(const double degreesRotated) = 0;
 
     std::string type = "";
     std::string id = "";
-    bool isBlocking;
+    bool isBlocking = true;
 };
