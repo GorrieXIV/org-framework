@@ -11,11 +11,6 @@
 using namespace orgmath;
 
 class PolygonCollider : Collider {
-  protected:
-    /// Vector of vertices for the polygon.
-    /// TODO: Switch to WorldPos type eventually.
-    std::vector<Vector2>  _vertices{};
-
   public:
     /// Constructor.
     PolygonCollider();
@@ -39,9 +34,20 @@ class PolygonCollider : Collider {
 
     void move(const Vector2& desiredMovement);
 
-    void rotate(const double degreesRotated);
+
+    // TODO: render override will need to be used once other collider types are supported.
+    // void render();
+
+    void addVertex(const Vector2& vertex);
+
+    // TODO: Implement polygon collider rotation.
+    // void rotate(const double degreesRotated);
 
     std::string type = "";
     std::string id = "";
     bool isBlocking;
+
+    /// Vector of vertices for the polygon.
+    /// TODO: Switch to WorldPos type eventually.
+    std::vector<Vector2> vertices{};
 };

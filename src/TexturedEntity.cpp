@@ -51,6 +51,12 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
         }
     }
 
+    try {
+        displayEngine.drawPolygon(_tempCollider.vertices);
+    } catch(...) {
+        // No valid polygon collider, do nothing for now..
+    }
+
     // Render the entities hitboxes, if requested.
     if (debug_hitboxes) {
         for (const auto& [hitbox, isBlocking] : _hitboxes) {

@@ -17,7 +17,7 @@ class Collider {
     Vector2 _pendingPosition{};
     float _width;
     float _height;
-    double _angle = 0;
+    float _angle = 0;
 
     bool _movementPending = false;
     bool _collisionDetected = false;

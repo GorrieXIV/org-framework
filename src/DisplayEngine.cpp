@@ -294,35 +294,19 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawRectangle(const DisplayRectangle& rect,
 // Draw arbitrary polygon.
 DISPLAY_ENGINE_STATUS DisplayEngine::drawPolygon(const std::vector<Vector2> vertices)
 {
-    Vector2 firstVertex = Vector2::nullVector();
-    Vector2 storedVertex = Vector2::nullVector();
-
     // Set drawing colour to red.
     SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0x77);
 
-    // Iterate between vertices while drawing points between them.
-    for (const auto& vertex : vertices) {
-        // Store the first vertex so that we can close the shape later.
-        if (storedVertex.isNull) {
-            firstVertex  = vertex;
-            storedVertex = vertex;
-            continue;
-        }
-
+    // Iterate through vertices while drawing points between them.
+    auto numVertices = vertices.size();
+    for (int i = 0; i < numVertices; i++)
+    {
         SDL_RenderDrawLine(renderer,
-                           storedVertex.x,
-                           storedVertex.y,
-                           vertex.x,
-                           vertex.y);
-        storedVertex = vertex;
+                           vertices[i].x,
+                           vertices[i].y,
+                           vertices[(i+1) % numVertices].x,
+                           vertices[(i+1) % numVertices].y);
     }
-
-    // Close the polygon.
-    SDL_RenderDrawLine(renderer,
-                       storedVertex.x,
-                       storedVertex.y,
-                       firstVertex.x,
-                       firstVertex.y);
 }
 
 
