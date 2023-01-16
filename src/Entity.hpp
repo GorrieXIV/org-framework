@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "Vectors.hpp"
 #include "Geometry.hpp"
+#include "PolygonCollider.hpp"
 
 #include <iostream>
 
@@ -67,6 +68,7 @@ class Entity {
     void resolvePendingActions() {
         if (_movementPending && !_collisionDetected) {
             _position = _pendingPosition;
+            _tempCollider.moveTo(_pendingPosition);
         }
 
         _movementPending = false;
@@ -102,4 +104,5 @@ class Entity {
     bool _collisionDetected = false;
 
     std::vector<Hitbox> _hitboxes{};
+    PolygonCollider _tempCollider{};
 };

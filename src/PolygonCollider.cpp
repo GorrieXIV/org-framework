@@ -25,9 +25,13 @@ void PolygonCollider::moveTo(const Vector2& desiredPosition)
     // OLD moveTo code:
     // _pendingPosition = desiredPosition;
     // _movementPending = true;
-    
     // Temporary moveTo:
+    auto differenceVector = desiredPosition - _position;
     _position = desiredPosition;
+    for (auto& vertex : vertices) {
+        vertex.x += differenceVector.x;
+        vertex.y += differenceVector.y;
+    }
 }
 
 void PolygonCollider::move(const Vector2& desiredMovement)
@@ -40,8 +44,13 @@ void PolygonCollider::move(const Vector2& desiredMovement)
     _position = _position + desiredMovement;
 }
 
-void PolygonCollider::rotate(const double degreesRotated)
+void PolygonCollider::addVertex(const Vector2& vertex)
 {
+    vertices.emplace_back(vertex);
+}
+
+// void PolygonCollider::rotate(const double degreesRotated)
+// {
     // OLD rotate code:
     // _angle += degreesRotated;
-}
+// }
