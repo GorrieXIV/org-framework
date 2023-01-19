@@ -23,12 +23,6 @@ void PhysicsEngine::checkCollisions()
             auto hitboxA = A->temp_getHitbox();
             auto hitboxB = B->temp_getHitbox();
 
-            // If A and B are the same entity, skip.
-            if (hitboxA == hitboxB) continue;
-
-            // If A or B have only a "null" hitbox, skip.
-            if (hitboxA.isNull() || hitboxB.isNull()) continue;
-
             // If A and B coincide, alert both entities of the collision.
             if (collisionDetected(hitboxA, hitboxB)) {
                 A->triggerCollision(*B);

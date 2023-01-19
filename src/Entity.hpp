@@ -44,8 +44,9 @@ class Entity {
 
     Rectangle<float> relativeToWorldPos(const Rectangle<float>& rect);
 
-    Rectangle<float> temp_getHitbox() const {
-        if (_hitboxes.size() == 0) {
+    PolygonCollider& temp_getHitbox() {
+        return _tempCollider;
+        /*if (_hitboxes.size() == 0) {
             return Rectangle<float>(0, 0, 0, 0);
         } else {
             auto hb = _hitboxes.front().first;
@@ -54,7 +55,7 @@ class Entity {
                                     hb.position.y + position.y - hb.height / 2,
                                     hb.width,
                                     hb.height);
-        }
+        }*/
     }
 
     void moveTo(const Vector2& desiredPosition);

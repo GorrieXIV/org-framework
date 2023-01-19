@@ -23,6 +23,11 @@ bool collisionDetected(const Rectangle<float>& recA,
 bool collisionDetected(const PolygonCollider& colliderA,
                        const PolygonCollider& colliderB)
 {
+    // Check for base cases like unintialized colliders.
+    if (!colliderA.vertices.size() || !colliderB.vertices.size()) {
+        return false;
+    }
+
     // Check if any axis on A separates the polygons.
     if (separatedByAxis(colliderA, colliderB)) {
         return false;
