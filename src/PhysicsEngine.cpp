@@ -20,6 +20,12 @@ void PhysicsEngine::checkCollisions()
             if (B->frameProcessed) {
                 continue;
             }
+
+            // Don't check entities against themselves.
+            if (A == B) {
+                continue;
+            }
+
             auto hitboxA = A->temp_getHitbox();
             auto hitboxB = B->temp_getHitbox();
 
