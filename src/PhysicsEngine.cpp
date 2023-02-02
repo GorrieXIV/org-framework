@@ -26,8 +26,8 @@ void PhysicsEngine::checkCollisions()
                 continue;
             }
 
-            auto hitboxA = A->temp_getHitbox();
-            auto hitboxB = B->temp_getHitbox();
+            auto hitboxA = A->getCollider();
+            auto hitboxB = B->getCollider();
 
             // If A and B coincide, alert both entities of the collision.
             if (collisionDetected(hitboxA, hitboxB)) {
