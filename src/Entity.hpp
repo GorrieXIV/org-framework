@@ -44,17 +44,10 @@ class Entity {
 
     Rectangle<float> relativeToWorldPos(const Rectangle<float>& rect);
 
-    Rectangle<float> temp_getHitbox() const {
-        if (_hitboxes.size() == 0) {
-            return Rectangle<float>(0, 0, 0, 0);
-        } else {
-            auto hb = _hitboxes.front().first;
-            auto position = _movementPending ? _pendingPosition : _position;
-            return Rectangle<float>(hb.position.x + position.x - hb.width / 2,
-                                    hb.position.y + position.y - hb.height / 2,
-                                    hb.width,
-                                    hb.height);
-        }
+    PolygonCollider getCollider() const {
+        auto lookAheadCollider = _tempCollider;
+        lookAheadCollider.moveTo(_pendingPosition);
+        return lookAheadCollider;
     }
 
     void moveTo(const Vector2& desiredPosition);
