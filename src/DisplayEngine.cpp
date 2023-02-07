@@ -291,6 +291,17 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawRectangle(const DisplayRectangle& rect,
     return DISPLAY_ENGINE_STATUS::ENGINE_SUCCESS;
 }
 
+DISPLAY_ENGINE_STATUS DisplayEngine::drawPoint(const Vector2& point,
+                                               const std::string& colour)
+{
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xC0, 0xCB, 0x77);
+    SDL_RenderDrawPoint(renderer,
+                        point.x - camera.position.x,
+                        point.y + camera.position.y);
+
+    return DISPLAY_ENGINE_STATUS::ENGINE_SUCCESS;
+}
+
 // Draw arbitrary polygon.
 DISPLAY_ENGINE_STATUS DisplayEngine::drawPolygon(const std::vector<Vector2> vertices)
 {
@@ -302,10 +313,10 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawPolygon(const std::vector<Vector2> vert
     for (int i = 0; i < numVertices; i++)
     {
         SDL_RenderDrawLine(renderer,
-                           vertices[i].x,
-                           vertices[i].y,
-                           vertices[(i+1) % numVertices].x,
-                           vertices[(i+1) % numVertices].y);
+                           vertices[i].x - camera.position.x,
+                           vertices[i].y + camera.position.y,
+                           vertices[(i+1) % numVertices].x - camera.position.x,
+                           vertices[(i+1) % numVertices].y) + camera.position.y;
     }
 }
 

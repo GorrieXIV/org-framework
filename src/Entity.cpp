@@ -43,5 +43,6 @@ void Entity::move(const Vector2& desiredMovement)
 
 void Entity::rotate(const double degreesRotated)
 {
-    _angle += degreesRotated;
+    _pendingRotation = degreesRotated;
+    _rotationPending = true;
 }

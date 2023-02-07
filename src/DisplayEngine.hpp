@@ -87,6 +87,10 @@ class DisplayEngine {
     DISPLAY_ENGINE_STATUS drawRectangle(const DisplayRectangle& rect,
                                         const std::string& colour = "red");
 
+    /// Draws a point in colour `colour`.
+    DISPLAY_ENGINE_STATUS drawPoint(const Vector2& point,
+                                    const std::string& colour = "red");
+
     /// Draws an outline of a polygon specified by points `vertices`.
     DISPLAY_ENGINE_STATUS drawPolygon(const std::vector<Vector2> vertices);
 

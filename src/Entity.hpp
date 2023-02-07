@@ -47,6 +47,7 @@ class Entity {
     PolygonCollider getCollider() const {
         auto lookAheadCollider = _tempCollider;
         lookAheadCollider.moveTo(_pendingPosition);
+        lookAheadCollider.rotate(_pendingRotation);
         return lookAheadCollider;
     }
 
@@ -59,12 +60,22 @@ class Entity {
     /// Used by the physics engine to finalize movements after is has determined
     /// that there is no blocking collision.
     void resolvePendingActions() {
-        if (_movementPending && !_collisionDetected) {
-            _position = _pendingPosition;
-            _tempCollider.moveTo(_pendingPosition);
+        if (!_collisionDetected) {
+            if (_movementPending) {
+                _position = _pendingPosition;
+                _tempCollider.moveTo(_pendingPosition);
+            }
+
+            if (_rotationPending) {
+                _angle += _pendingRotation;
+                _tempCollider.rotate(_pendingRotation);
+            }
         }
 
+        _pendingPosition = _position;
+        _pendingRotation = 0;
         _movementPending = false;
+        _rotationPending = false;
         _collisionDetected = false;
     }
 
@@ -92,8 +103,10 @@ class Entity {
     float _width;
     float _height;
     double _angle = 0;
+    double _pendingRotation = 0;
 
     bool _movementPending = false;
+    bool _rotationPending = false;
     bool _collisionDetected = false;
 
     std::vector<Hitbox> _hitboxes{};

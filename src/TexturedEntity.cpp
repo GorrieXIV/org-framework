@@ -53,6 +53,7 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
 
     try {
         displayEngine.drawPolygon(_tempCollider.vertices);
+        displayEngine.drawPoint(_tempCollider.getPosition());
     } catch(...) {
         // No valid polygon collider, do nothing for now..
     }
