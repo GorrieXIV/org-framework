@@ -55,11 +55,6 @@ class Texture {
     int _height;
 };
 
-class Surface {
-  public:
-    Surface();
-};
-
 class FontTexture : public Texture {
   public:
 
