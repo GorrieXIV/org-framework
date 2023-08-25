@@ -206,7 +206,8 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(SDL_Texture* texture,
 // THE drawTextureAt FUNCTIONS NEED TO BE REFACTORED
 DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
                                                    const DisplayRectangle& clipQuad,
-                                                   const DisplayRectangle& drawQuad)
+                                                   const DisplayRectangle& drawQuad,
+                                                   const double angle)
 {
     try {
         SDL_Rect t1 = {static_cast<int>(clipQuad.position.x),
@@ -226,10 +227,13 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
         drawCopy->x -= camera.position.x;
         drawCopy->y += camera.position.y;
 
-        SDL_RenderCopy(renderer,
-                       _textureSheets.at(sheetName),
-                       clipCopy,
-                       drawCopy);
+        SDL_RenderCopyEx(renderer,
+                         _textureSheets.at(sheetName),
+                         clipCopy,
+                         drawCopy,
+                         angle,
+                         NULL,
+                         SDL_FLIP_NONE);
 
         return ENGINE_SUCCESS;
     } catch (...) {
@@ -270,6 +274,7 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawSpriteAt(const std::string& sheetName,
     }
 }
 
+// Draw rectangle.
 DISPLAY_ENGINE_STATUS DisplayEngine::drawRectangle(const DisplayRectangle& rect,
                                                    const std::string& colour)
 {
@@ -285,6 +290,36 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawRectangle(const DisplayRectangle& rect,
 
     return DISPLAY_ENGINE_STATUS::ENGINE_SUCCESS;
 }
+
+DISPLAY_ENGINE_STATUS DisplayEngine::drawPoint(const Vector2& point,
+                                               const std::string& colour)
+{
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0xC0, 0xCB, 0x77);
+    SDL_RenderDrawPoint(renderer,
+                        point.x - camera.position.x,
+                        point.y + camera.position.y);
+
+    return DISPLAY_ENGINE_STATUS::ENGINE_SUCCESS;
+}
+
+// Draw arbitrary polygon.
+DISPLAY_ENGINE_STATUS DisplayEngine::drawPolygon(const std::vector<Vector2> vertices)
+{
+    // Set drawing colour to red.
+    SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0x77);
+
+    // Iterate through vertices while drawing points between them.
+    auto numVertices = vertices.size();
+    for (int i = 0; i < numVertices; i++)
+    {
+        SDL_RenderDrawLine(renderer,
+                           vertices[i].x - camera.position.x,
+                           vertices[i].y + camera.position.y,
+                           vertices[(i+1) % numVertices].x - camera.position.x,
+                           vertices[(i+1) % numVertices].y) + camera.position.y;
+    }
+}
+
 
 // Texture Clip Cloning approach.
 DISPLAY_ENGINE_STATUS DisplayEngine::copySpriteFromSheet(SDL_Texture* out,

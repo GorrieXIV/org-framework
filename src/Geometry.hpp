@@ -3,6 +3,7 @@
 #include <string>
 
 #include "SDL.h"
+#include "Window.hpp"
 #include "Vectors.hpp"
 
 namespace orgmath {
@@ -100,6 +101,27 @@ private:
     __type__ _radius = 0;
     __type__ _circumference = 0;
 }; // Circle
+
+template <typename __type__>
+class Triangle {
+public:
+    Triangle() = default;
+
+    /// Instantiate a rectangle at a specific point.
+    Triangle(std::vector<__type__> vertices)
+    : vertices{vertices}
+    {
+        // Void.
+    }
+
+    /// Return a string representation of the rectangle.
+    /// An unconstrained rectangle should look like
+    /// "{Inf, Inf, <width>, <height>}".
+    std::string toString() const;
+
+    // Vector of points representing the vertices of the shape.
+    std::vector<__type__> vertices{};
+}; // Triangle
 
 }; // namespace orgmath
 

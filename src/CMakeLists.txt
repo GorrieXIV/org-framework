@@ -7,6 +7,8 @@ set(HEADERS
     Geometry.hpp
     Vectors.hpp
     PhysicsEngine.hpp
+    Collider.hpp
+    PolygonCollider.hpp
     CollisionDetection.hpp
     Timer.hpp
     Entity.hpp
@@ -23,6 +25,8 @@ set(SOURCES
     Window.cpp
     Geometry.cpp
     PhysicsEngine.cpp
+    Collider.cpp
+    PolygonCollider.cpp
     CollisionDetection.cpp
     Timer.cpp
     Entity.cpp

@@ -16,14 +16,18 @@ void PhysicsEngine::checkCollisions()
 {
     for (const auto& A : _entities) {
         for (const auto& B : _entities) {
-            auto hitboxA = A->temp_getHitbox();
-            auto hitboxB = B->temp_getHitbox();
+            // Skip this entity if it has already been fully processed.
+            if (B->frameProcessed) {
+                continue;
+            }
 
-            // If A and B are the same entity, skip.
-            if (hitboxA == hitboxB) continue;
+            // Don't check entities against themselves.
+            if (A == B) {
+                continue;
+            }
 
-            // If A or B have only a "null" hitbox, skip.
-            if (hitboxA.isNull() || hitboxB.isNull()) continue;
+            auto hitboxA = A->getCollider();
+            auto hitboxB = B->getCollider();
 
             // If A and B coincide, alert both entities of the collision.
             if (collisionDetected(hitboxA, hitboxB)) {
@@ -31,7 +35,13 @@ void PhysicsEngine::checkCollisions()
                 B->triggerCollision(*A);
             }
         }
+
+        A->frameProcessed = true;
         A->resolvePendingActions();
+    }
+
+    for (const auto& A : _entities) {
+        A->frameProcessed = false;
     }
 }
 

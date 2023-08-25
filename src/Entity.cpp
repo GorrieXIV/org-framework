@@ -34,3 +34,15 @@ void Entity::moveTo(const Vector2& desiredPosition)
     _pendingPosition = desiredPosition;
     _movementPending = true;
 }
+
+void Entity::move(const Vector2& desiredMovement)
+{
+    _pendingPosition = _position + desiredMovement;
+    _movementPending = true;
+}
+
+void Entity::rotate(const double degreesRotated)
+{
+    _pendingRotation = degreesRotated;
+    _rotationPending = true;
+}

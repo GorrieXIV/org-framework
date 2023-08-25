@@ -8,9 +8,12 @@ TexturedEntity::~TexturedEntity() {}
 
 void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
 {
-    if (_spriteClip.isNull()) {
+    // If the entity has no sprite, and debug rendering isn't being used, simply return.
+    if (_spriteClip.isNull() && !(debug_worldPosition || debug_hitboxes)) {
         return;
     }
+
+    // Render the entities sprite.
     DisplayRectangle drawQuad = DisplayRectangle(static_cast<int>(_position.x),
                                                  static_cast<int>(_position.y),
                                                  static_cast<int>(_width),
@@ -19,19 +22,27 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
         drawQuad.position.x -= _width / 2;
         drawQuad.position.y -= _height / 2;
     }
-    displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad);
+    displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad, _angle);
 
+    // Draw child textures.
+    for (const auto& [texture, quad] : _childTextures) {
+        texture->render(_position.x + quad.position.x,
+                        _position.y + quad.position.y,
+                        {0, 0, 0, 0});
+    }
+
+    // Render the entities position coordinates, if requested.
     if (debug_worldPosition) {
-        std::string entityPosition = "[" + std::to_string(_position.x)
-                                   + "," + std::to_string(_position.y) + "]";
-        FontTexture positionLabel = FontTexture();
         try {
+            std::string entityPosition = "[" + std::to_string(_position.x)
+                                       + "," + std::to_string(_position.y) + "]";
+            FontTexture positionLabel = FontTexture();
             positionLabel.loadFromRenderedText(displayEngine.getFont("retro"),
                                                entityPosition,
-                                               {0xFF, 0xFF, 0xFF},
+                                               {0x00, 0x00, 0xFF},
                                                displayEngine.renderer);
 
-            positionLabel.render(static_cast<int>(_position.x - _width / 2),
+            positionLabel.render(static_cast<int>(_position.x - _width / 2 + 50),
                                  static_cast<int>(_position.y - _height / 2),
                                  {0, 0, 0, 0});
         } catch (...) {
@@ -40,6 +51,14 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
         }
     }
 
+    try {
+        displayEngine.drawPolygon(_tempCollider.vertices);
+        displayEngine.drawPoint(_tempCollider.getPosition());
+    } catch(...) {
+        // No valid polygon collider, do nothing for now..
+    }
+
+    // Render the entities hitboxes, if requested.
     if (debug_hitboxes) {
         for (const auto& [hitbox, isBlocking] : _hitboxes) {
             //TODO: Build a cleaner means of casting between different Rectangle types.

@@ -5,6 +5,7 @@
 #include "SDL.h"
 #include "Vectors.hpp"
 #include "Geometry.hpp"
+#include "PolygonCollider.hpp"
 
 #include <iostream>
 
@@ -43,29 +44,38 @@ class Entity {
 
     Rectangle<float> relativeToWorldPos(const Rectangle<float>& rect);
 
-    Rectangle<float> temp_getHitbox() const {
-        if (_hitboxes.size() == 0) {
-            return Rectangle<float>(0, 0, 0, 0);
-        } else {
-            auto hb = _hitboxes.front().first;
-            auto position = _movementPending ? _pendingPosition : _position;
-            return Rectangle<float>(hb.position.x + position.x - hb.width / 2,
-                                    hb.position.y + position.y - hb.height / 2,
-                                    hb.width,
-                                    hb.height);
-        }
+    PolygonCollider getCollider() const {
+        auto lookAheadCollider = _tempCollider;
+        lookAheadCollider.moveTo(_pendingPosition);
+        lookAheadCollider.rotate(_pendingRotation);
+        return lookAheadCollider;
     }
 
     void moveTo(const Vector2& desiredPosition);
 
+    void move(const Vector2& desiredMovement);
+
+    void rotate(const double degreesRotated);
+
     /// Used by the physics engine to finalize movements after is has determined
     /// that there is no blocking collision.
     void resolvePendingActions() {
-        if (_movementPending && !_collisionDetected) {
-            _position = _pendingPosition;
+        if (!_collisionDetected) {
+            if (_movementPending) {
+                _position = _pendingPosition;
+                _tempCollider.moveTo(_pendingPosition);
+            }
+
+            if (_rotationPending) {
+                _angle += _pendingRotation;
+                _tempCollider.rotate(_pendingRotation);
+            }
         }
 
+        _pendingPosition = _position;
+        _pendingRotation = 0;
         _movementPending = false;
+        _rotationPending = false;
         _collisionDetected = false;
     }
 
@@ -86,15 +96,21 @@ class Entity {
     }
 
     std::string type = "";
+    std::string id = "";
+    bool frameProcessed = false;
 
   protected:
     Vector2 _position{};
     Vector2 _pendingPosition{};
     float _width;
     float _height;
+    double _angle = 0;
+    double _pendingRotation = 0;
 
     bool _movementPending = false;
+    bool _rotationPending = false;
     bool _collisionDetected = false;
 
     std::vector<Hitbox> _hitboxes{};
+    PolygonCollider _tempCollider{};
 };
