@@ -6,7 +6,6 @@
 typedef unsigned long int uint32;
 
 class Timer {
-
   public:
     /// Constructor
     Timer();

@@ -71,7 +71,9 @@ class Entity {
 
     /// Use this function to tell `this` that it collided with another Entity.
     virtual void triggerCollision(const Entity& collidingEntity) {
-        _collisionDetected = true;
+        if (collidingEntity.type == "blocking") {
+            _collisionDetected = true;
+        }
     }
 
     [[nodiscard]] virtual std::string getStatus() const {
