@@ -15,14 +15,14 @@ PolygonCollider::~PolygonCollider() {}
 
 void PolygonCollider::setPosition(Vector2 position)
 {
-    _position.x = position.x;
-    _position.y = position.y;
+    _pendingPosition = _position = position;
 }
 
 void PolygonCollider::setPosition(float x, float y)
 {
     _position.x = x;
     _position.y = y;
+    _pendingPosition = _position;
 }
 
 void PolygonCollider::moveTo(const Vector2& desiredPosition)

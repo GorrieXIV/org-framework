@@ -19,14 +19,14 @@ Entity::~Entity() {}
 
 void Entity::setPosition(Vector2 position)
 {
-    _position.x = position.x;
-    _position.y = position.y;
+    _pendingPosition = _position = position;
 }
 
 void Entity::setPosition(float x, float y)
 {
     _position.x = x;
     _position.y = y;
+    _pendingPosition = _position;
 }
 
 void Entity::moveTo(const Vector2& desiredPosition)
@@ -37,7 +37,7 @@ void Entity::moveTo(const Vector2& desiredPosition)
 
 void Entity::move(const Vector2& desiredMovement)
 {
-    _pendingPosition = _position + desiredMovement;
+    _pendingPosition += desiredMovement;
     _movementPending = true;
 }
 

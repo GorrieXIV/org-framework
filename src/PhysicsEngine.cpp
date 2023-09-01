@@ -2,17 +2,28 @@
 
 namespace orgphysics {
 
-PhysicsEngine::PhysicsEngine()
+PhysicsEngine:: PhysicsEngine()
 {
 
 }
 
-PhysicsEngine::~PhysicsEngine()
+PhysicsEngine:: ~PhysicsEngine()
 {
 
 }
 
-void PhysicsEngine::checkCollisions()
+void PhysicsEngine:: addEntity(Entity& entity)
+{
+    auto entitySharedPtr = std::shared_ptr<Entity>(&entity);
+    _entities.push_back(entitySharedPtr);
+}
+
+void PhysicsEngine:: update()
+{
+    _checkCollisions();
+}
+
+void PhysicsEngine:: _checkCollisions()
 {
     for (const auto& A : _entities) {
         for (const auto& B : _entities) {
@@ -43,12 +54,6 @@ void PhysicsEngine::checkCollisions()
     for (const auto& A : _entities) {
         A->frameProcessed = false;
     }
-}
-
-void PhysicsEngine::addEntity(Entity& entity)
-{
-    auto entitySharedPtr = std::shared_ptr<Entity>(&entity);
-    _entities.push_back(entitySharedPtr);
 }
 
 }; // namespace orgphysics

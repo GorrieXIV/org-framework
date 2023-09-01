@@ -1,9 +1,6 @@
-/* OrgEngine - vector types
- *
- * Author: Robert "gxiv" Gorrie
- */
-
 #pragma once
+
+#include <iostream>
 
 typedef struct {
     int32_t x;
@@ -17,12 +14,16 @@ typedef struct {
 
 class Vector2 {
   public:
-    float x;
-    float y;
+    float x = 0.0f;
+    float y = 0.0f;
     bool isNull = false;
 
     static Vector2 nullVector() {
         return Vector2{0, 0, true};
+    }
+
+    std::string toString() const {
+        return "{" + std::to_string(x) + ", " + std::to_string(y) + "}";
     }
 
     Vector2& operator+=(const Vector2& rhs) {

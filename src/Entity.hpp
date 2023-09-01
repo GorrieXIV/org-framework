@@ -96,7 +96,7 @@ class Entity {
     }
 
     std::string type = "";
-    std::string id = "";
+    std::string id = "UNSET ENTITY ID";
     bool frameProcessed = false;
 
   protected:

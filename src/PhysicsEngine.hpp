@@ -19,14 +19,18 @@ class PhysicsEngine {
     /// Destructor.
     ~PhysicsEngine();
 
-    /// Check for collisions on the current frame.
-    void checkCollisions();
-
     /// Add an entity to the once-per-frame collision check.
     void addEntity(Entity& entity);
 
+    /// To be called every frame for most cases.
+    /// Applies forces and checks for/triggers collisions.
+    void update();
+
   private:
+    void _checkCollisions();
+
     std::vector<std::shared_ptr<Entity>> _entities;
+    std::vector<Vector2> _globalForces;
 };
 
 }; // namespace orgphysics

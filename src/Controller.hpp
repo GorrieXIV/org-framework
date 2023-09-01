@@ -62,7 +62,8 @@ const std::map<std::string, int> ORG_SDL_KEY_MAPPING = {
     {"UP", SDL_SCANCODE_UP},
     {"RIGHT", SDL_SCANCODE_RIGHT},
     {"DOWN", SDL_SCANCODE_DOWN},
-    {"LEFT", SDL_SCANCODE_LEFT}
+    {"LEFT", SDL_SCANCODE_LEFT},
+    {"SPACE", SDL_SCANCODE_SPACE}
 };
 
 // We use std::functions to store events (entity member functions)
