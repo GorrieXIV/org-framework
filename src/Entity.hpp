@@ -30,6 +30,9 @@ class Entity {
     /// Get the entities width and height as a 2d vector.
     Vector2 getDimensions() const { return {_width, _height}; }
 
+    /// Get the constant forces acting on this entity.
+    const std::vector<Vector2>& getActiveForces() const { return _activeForces; }
+
     /// Set the entities position with a 2d vector
     void setPosition(Vector2 position);
 
@@ -44,9 +47,9 @@ class Entity {
 
     Rectangle<float> relativeToWorldPos(const Rectangle<float>& rect);
 
-    PolygonCollider getCollider() const {
-        auto lookAheadCollider = _tempCollider;
-        lookAheadCollider.moveTo(_pendingPosition);
+    PolygonCollider getLookAheadCollider() const {
+        auto lookAheadCollider = collider;
+        lookAheadCollider.moveTo(_pendingPosition + acceleration);
         lookAheadCollider.rotate(_pendingRotation);
         return lookAheadCollider;
     }
@@ -59,25 +62,11 @@ class Entity {
 
     /// Used by the physics engine to finalize movements after is has determined
     /// that there is no blocking collision.
-    void resolvePendingActions() {
-        if (!_collisionDetected) {
-            if (_movementPending) {
-                _position = _pendingPosition;
-                _tempCollider.moveTo(_pendingPosition);
-            }
+    void resolvePendingActions();
 
-            if (_rotationPending) {
-                _angle += _pendingRotation;
-                _tempCollider.rotate(_pendingRotation);
-            }
-        }
+    void applyForce(const Vector2& f);
 
-        _pendingPosition = _position;
-        _pendingRotation = 0;
-        _movementPending = false;
-        _rotationPending = false;
-        _collisionDetected = false;
-    }
+    void applyConstantForce(Vector2 force);
 
     /// Use this function to tell `this` that it collided with another Entity.
     virtual void triggerCollision(const Entity& collidingEntity) {
@@ -97,20 +86,21 @@ class Entity {
 
     std::string type = "";
     std::string id = "UNSET ENTITY ID";
+    PolygonCollider collider{};
     bool frameProcessed = false;
+    bool isFixed = false;
+    Vector2 acceleration{};
 
   protected:
     Vector2 _position{};
     Vector2 _pendingPosition{};
+    Vector2 _pendingMovement{};
     float _width;
     float _height;
     double _angle = 0;
     double _pendingRotation = 0;
-
-    bool _movementPending = false;
-    bool _rotationPending = false;
     bool _collisionDetected = false;
 
     std::vector<Hitbox> _hitboxes{};
-    PolygonCollider _tempCollider{};
+    std::vector<Vector2> _activeForces{};
 };

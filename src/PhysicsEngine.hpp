@@ -26,7 +26,10 @@ class PhysicsEngine {
     /// Applies forces and checks for/triggers collisions.
     void update();
 
+    void addGlobalForce(Vector2 force);
+
   private:
+    void _applyForces();
     void _checkCollisions();
 
     std::vector<std::shared_ptr<Entity>> _entities;

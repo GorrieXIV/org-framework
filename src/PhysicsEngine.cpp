@@ -20,7 +20,36 @@ void PhysicsEngine:: addEntity(Entity& entity)
 
 void PhysicsEngine:: update()
 {
+    _applyForces();
     _checkCollisions();
+}
+
+void PhysicsEngine:: addGlobalForce(Vector2 force)
+{
+    _globalForces.push_back(force);
+}
+
+void PhysicsEngine:: _applyForces()
+{
+    // Summize global forces.
+    Vector2 netGlobalForce{};
+    for (const auto& F : _globalForces) {
+        netGlobalForce += F;
+    }
+
+    Vector2 netUnitForce{};
+    for (const auto& A : _entities) {
+        if (A->isFixed) {
+            continue;
+        }
+
+        for (const auto& F : A->getActiveForces()) {
+            netUnitForce += F;
+        }
+
+        netUnitForce += netGlobalForce;
+        A->acceleration += netUnitForce;
+    }
 }
 
 void PhysicsEngine:: _checkCollisions()
@@ -37,8 +66,8 @@ void PhysicsEngine:: _checkCollisions()
                 continue;
             }
 
-            auto hitboxA = A->getCollider();
-            auto hitboxB = B->getCollider();
+            auto hitboxA = A->getLookAheadCollider();
+            auto hitboxB = B->getLookAheadCollider();
 
             // If A and B coincide, alert both entities of the collision.
             if (collisionDetected(hitboxA, hitboxB)) {

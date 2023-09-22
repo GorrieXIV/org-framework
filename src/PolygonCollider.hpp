@@ -19,10 +19,11 @@ class PolygonCollider : Collider {
     ~PolygonCollider();
 
     /// Get the entities position as a 2d vector.
-    Vector2 getPosition() const { return _position; }
+    const Vector2& getPosition() const { return _position; }
 
     /// Get the entities width and height as a 2d vector.
     Vector2 getDimensions() const { return {_width, _height}; }
+
 
     /// Set the entities position with a 2d vector
     void setPosition(Vector2 position);
@@ -35,7 +36,6 @@ class PolygonCollider : Collider {
     void move(const Vector2& desiredMovement);
 
     void rotate(const double degreesRotate);
-
 
     // TODO: render override will need to be used once other collider types are supported.
     // void render();
