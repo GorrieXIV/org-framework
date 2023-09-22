@@ -73,6 +73,11 @@ class Entity {
         if (collidingEntity.type == "blocking") {
             _collisionDetected = true;
         }
+
+        if (collidingEntity.id == "ground") {
+            grounded = true;
+            acceleration.y = 0;
+        }
     }
 
     [[nodiscard]] virtual std::string getStatus() const {
@@ -89,6 +94,7 @@ class Entity {
     PolygonCollider collider{};
     bool frameProcessed = false;
     bool isFixed = false;
+    bool grounded = false;
     Vector2 acceleration{};
 
   protected:
