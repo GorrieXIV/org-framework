@@ -122,6 +122,8 @@ class DisplayEngine {
                                         const std::string& spriteId)
                                         noexcept(false);
 
+    DISPLAY_ENGINE_STATUS drawBackground(const std::string& sheet);
+
     // Frees memory and stops the display engine.
     void close();
 

@@ -320,6 +320,13 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawPolygon(const std::vector<Vector2> vert
     }
 }
 
+DISPLAY_ENGINE_STATUS DisplayEngine::drawBackground(const std::string& sheet)
+{
+    auto drawQuad = DisplayRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    auto spriteClip = DisplayRectangle(0, 0, 0, 0);
+    drawTextureAt(sheet, spriteClip, drawQuad, 0);
+}
+
 
 // Texture Clip Cloning approach.
 DISPLAY_ENGINE_STATUS DisplayEngine::copySpriteFromSheet(SDL_Texture* out,
