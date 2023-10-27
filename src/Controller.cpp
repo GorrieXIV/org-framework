@@ -4,7 +4,11 @@ extern Camera camera;
 
 Controller::Controller()
 {
-
+    // Get the size of the keystate for this run context, and initialize
+    // our stored keystate pointer with that much space.
+    std::unique_ptr<int> keyStateSize = std::make_unique<int>();
+    SDL_GetKeyboardState(keyStateSize.get());
+    _previousKeyState = std::make_unique<uint8_t[]>(*keyStateSize);
 }
 
 void Controller::addMouseListener(ORG_MOUSE_INPUT mouseButton,
@@ -29,7 +33,18 @@ void Controller::addKeyListener(std::string key,
                                 KeyEvent event,
                                 int priority)
 {
-    _keyEventMap.emplace(ORG_SDL_KEY_MAPPING.at(key), event);
+    switch (strokeType) {
+        case ORG_KEY_EVENT::KEY_DOWN: 
+            _keyDownEventMap.emplace(ORG_SDL_KEY_MAPPING.at(key), event);
+            break;
+        case ORG_KEY_EVENT::KEY_UP: 
+            _keyUpEventMap.emplace(ORG_SDL_KEY_MAPPING.at(key), event);
+            break;
+        default: 
+            _keyHoldEventMap.emplace(ORG_SDL_KEY_MAPPING.at(key), event);
+            break;
+    }
+
 }
 
 void Controller::addEventOnClick(std::shared_ptr<Entity> entityReference,
@@ -118,11 +133,30 @@ void Controller::poll()
         _rightMouseDownTracker = false;
     }
 
-    /// Check keyboard state and trigger events.
-    auto keyboardState = SDL_GetKeyboardState(0);
-    for (const auto& [keycode, event] : _keyEventMap) {
+    // Check keyboard state and trigger events.
+    std::unique_ptr<int> keyStateSize = std::make_unique<int>();
+    auto keyboardState = SDL_GetKeyboardState(keyStateSize.get());
+    for (const auto& [keycode, event] : _keyDownEventMap) {
         if (keyboardState[keycode]) {
             event();
         }
     }
+
+    // Check for key up events by checking if key from last frame
+    // is no longer being held down.
+    for (const auto& [keycode, event] : _keyUpEventMap) {
+        if (_previousKeyState[keycode] && !keyboardState[keycode]) {
+            event();
+        }
+    }
+
+    // Check for key hold events by checking if keys have been held across frames.
+    for (const auto& [keycode, event] : _keyHoldEventMap) {
+        if (_previousKeyState[keycode] && keyboardState[keycode]) {
+            event();
+        }
+    }
+
+    // Copy current frames keyboard state into the previouse key state.
+    memcpy(_previousKeyState.get(), keyboardState, *keyStateSize);
 }

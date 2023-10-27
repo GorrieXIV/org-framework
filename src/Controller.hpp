@@ -126,9 +126,14 @@ class Controller
 
   private:
     std::map<ORG_MOUSE_INPUT, MouseEvent> _mouseEventMap{};
-    std::map<int, KeyEvent> _keyEventMap{};
     std::map<EntityReference, MouseEvent> _leftClickEventMap{};
     std::map<EntityReference, MouseEvent> _rightClickEventMap{};
+    std::map<int, KeyEvent> _keyDownEventMap{};
+    std::map<int, KeyEvent> _keyUpEventMap{};
+    std::map<int, KeyEvent> _keyHoldEventMap{};
+
+    // CHANGE THIS TO SHARED_PTR IF CONTROLLER EVER NEEDS TO BE THREAD SAFE.
+    std::unique_ptr<uint8_t[]> _previousKeyState;
 
     bool _leftMouseDownTracker = false;
     bool _rightMouseDownTracker = false;
