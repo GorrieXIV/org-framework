@@ -1,32 +1,16 @@
-OrgEngine - the Origins Realtime Game Engine
-============================================
+ORG Framework- the Origins Realtime Game Framework
+==================================================
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+ORG is a 2D game development framework written in C++. It provides libraries and interfaces that greatly simplify many of the nitty gritty, low-level aspects of 2D game development without compromising on performance and deveoper control. The goal of the ORG framework is to empower developers to build 2D games from the ground up - in a fraction of the time with a fraction of the headaches.
+
+Management layers and interfaces are provided for the following, amongst other things:
+- Entity and scene managment
+- Rendering and pixel-drawing
+- Audio playback
+- Input detection and events
+- Collision detection
 
 ## Installing Dependencies
 
 1. Execute `sudo bash bin/install_deps.sh` on linux-based systems, or simply `./bin/install_deps.sh` on MacOS, to install the project dependencies.
-
-## Instructions for Contributing
-
-### Setting Up
-
-1. Fork this repository by using the button on the top-right of the repo's github page.
-2. Clone your fork locally: `git clone https://github.com/<your_github_account>/OrgEngine.git`
-3. Move into the repo: `cd <path_to_repository>`
-2. Add the upstream repo as a remote: `git remote add upstream https://github.com/GorrieXIV/OrgEngine.git`
-3. Append some useful git helpers to your gitconfig: `cat etc/gitconfig >> ~/.gitconfig`
-
-### Adding Code
-Whenever adding functionality or fixing bugs, following this procedure can help reduce risk and keep things organized:
-1. `git upmaster`
-2. Create a new branch for your addition, with a suitable name: `git checkout -b <suitable_branch_name>`
-3. Add your feature/bugfix
-4. Push your branch online (this step can be done at any point in your development, after the branch is created): `git push -u origin <suitable_branch_name>`
-5. Once the addition is ready to be added, create a pull request for the branch:
-    * Select the "Pull requests" tab on the repo's Github page
-    * Click the green "New pull request" button on the right-side of the page
-    * Click the blue "compare across forks" link to create a PR from your fork
-    * Add a useful PR title and description
-
-## Contributors
-* Robert Gorrie
-* Serge Cosman Agraz
