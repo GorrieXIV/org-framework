@@ -22,7 +22,22 @@ void TexturedEntity::render(bool debug_worldPosition, bool debug_hitboxes)
         drawQuad.position.x -= _width / 2;
         drawQuad.position.y -= _height / 2;
     }
-    displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad, _angle);
+
+    if (_invalidSpriteId) {
+        displayEngine.drawRectangle(drawQuad);
+        std::string textureNotFoundMessage = "TEXTURE NOT FOUND";
+        FontTexture errorLabel = FontTexture();
+        errorLabel.loadFromRenderedText(displayEngine.getFont("retro"),
+                                        textureNotFoundMessage,
+                                        {0xFF, 0xFF, 0xFF},
+                                        displayEngine.renderer);
+
+        errorLabel.render(static_cast<int>(_position.x),
+                          static_cast<int>(_position.y),
+                          {0, 0, 0, 0});
+    } else {
+        displayEngine.drawTextureAt(_textureSheet, _spriteClip, drawQuad, _angle);
+    }
 
     // Draw child textures.
     for (const auto& [texture, quad] : _childTextures) {
@@ -83,9 +98,14 @@ void TexturedEntity::setTextureFromSpriteSheet(const std::string& sheetName,
                                                const std::string& textureId)
 {
     _textureSheet = sheetName;
-    DisplayRectangle spriteClip = displayEngine.getTextureClipById(_textureSheet, textureId);
-    _spriteId = textureId;
-    _spriteClip = spriteClip;
+    try {
+        DisplayRectangle spriteClip = displayEngine.getTextureClipById(_textureSheet, textureId);
+        _spriteId = textureId;
+        _spriteClip = spriteClip;
+        _invalidSpriteId = false;
+    } catch (...) {
+        _invalidSpriteId = true;
+    }
 }
 
 void TexturedEntity::createTextureFromSpriteSheet(const std::string& sheetName)

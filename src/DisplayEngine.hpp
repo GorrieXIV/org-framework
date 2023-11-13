@@ -119,8 +119,7 @@ class DisplayEngine {
     TTF_Font* getFont(const std::string& fontIdentifier);
 
     DisplayRectangle getTextureClipById(const std::string& sheetName,
-                                        const std::string& spriteId)
-                                        noexcept(false);
+                                        const std::string& spriteId);
 
     DISPLAY_ENGINE_STATUS drawBackground(const std::string& sheet);
 

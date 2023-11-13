@@ -209,24 +209,26 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
                                                    const DisplayRectangle& drawQuad,
                                                    const double angle)
 {
+    SDL_Rect t1 = {static_cast<int>(clipQuad.position.x),
+                   static_cast<int>(clipQuad.position.y),
+                   static_cast<int>(clipQuad.width),
+                   static_cast<int>(clipQuad.height)};
+    SDL_Rect* clipCopy = &t1;
+    if (clipQuad.isNull()) { clipCopy = NULL; }
+
+    SDL_Rect t2 = {static_cast<int>(drawQuad.position.x),
+                   static_cast<int>(drawQuad.position.y),
+                   static_cast<int>(drawQuad.width),
+                   static_cast<int>(drawQuad.height)};
+    SDL_Rect* drawCopy = &t2;
+    if (drawQuad.isNull()) { drawCopy = NULL; }
+
+    drawCopy->x -= camera.position.x;
+    drawCopy->y += camera.position.y;
+
+    SDL_Texture* texture;
+
     try {
-        SDL_Rect t1 = {static_cast<int>(clipQuad.position.x),
-                       static_cast<int>(clipQuad.position.y),
-                       static_cast<int>(clipQuad.width),
-                       static_cast<int>(clipQuad.height)};
-        SDL_Rect* clipCopy = &t1;
-        if (clipQuad.isNull()) { clipCopy = NULL; }
-
-        SDL_Rect t2 = {static_cast<int>(drawQuad.position.x),
-                       static_cast<int>(drawQuad.position.y),
-                       static_cast<int>(drawQuad.width),
-                       static_cast<int>(drawQuad.height)};
-        SDL_Rect* drawCopy = &t2;
-        if (drawQuad.isNull()) { drawCopy = NULL; }
-
-        drawCopy->x -= camera.position.x;
-        drawCopy->y += camera.position.y;
-
         SDL_RenderCopyEx(renderer,
                          _textureSheets.at(sheetName),
                          clipCopy,
@@ -234,9 +236,9 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
                          angle,
                          NULL,
                          SDL_FLIP_NONE);
-
         return ENGINE_SUCCESS;
-    } catch (...) {
+    } catch (std::runtime_error e) {
+        drawRectangle(drawQuad);
         return ENGINE_FILE_NOT_FOUND;
     }
 }
@@ -388,19 +390,12 @@ TTF_Font* DisplayEngine::getFont(const std::string& fontIdentifier)
 DisplayRectangle DisplayEngine::getTextureClipById(const std::string& sheetName,
                                                    const std::string& spriteId)
 {
-    try {
-        auto sheetDescription = _textureSheetDescriptions.at(sheetName);
-        auto spriteDetails = sheetDescription["textures"][spriteId];
-        return {spriteDetails["x_start"],
-                spriteDetails["y_start"],
-                spriteDetails["width"],
-                spriteDetails["height"]};
-    } catch (...) {
-        //FIXME: Implement explicit error handling.
-        throw std::runtime_error("Sheet matching '" + sheetName + "' not found.");
-    }
-
-
+    auto sheetDescription = _textureSheetDescriptions.at(sheetName);
+    auto spriteDetails = sheetDescription["textures"][spriteId];
+    return {spriteDetails["x_start"],
+            spriteDetails["y_start"],
+            spriteDetails["width"],
+            spriteDetails["height"]};
 }
 
 void DisplayEngine::close()

@@ -52,6 +52,7 @@ class TexturedEntity : public Entity {
     Texture           _texture;
     DisplayRectangle  _spriteClip;
     std::string       _spriteId;
+    bool              _invalidSpriteId = false;
     std::vector<std::pair<std::shared_ptr<Texture>, DisplayRectangle>> _childTextures{};
 
 
