@@ -243,6 +243,41 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
     }
 }
 
+DISPLAY_ENGINE_STATUS DisplayEngine::drawTextureAt(const std::string& sheetName,
+                                                   const DisplayRectangle& clipQuad,
+                                                   const DisplayRectangle& drawQuad)
+{
+    SDL_Rect t1 = {static_cast<int>(clipQuad.position.x),
+                   static_cast<int>(clipQuad.position.y),
+                   static_cast<int>(clipQuad.width),
+                   static_cast<int>(clipQuad.height)};
+    SDL_Rect* clipCopy = &t1;
+    if (clipQuad.isNull()) { clipCopy = NULL; }
+
+    SDL_Rect t2 = {static_cast<int>(drawQuad.position.x),
+                   static_cast<int>(drawQuad.position.y),
+                   static_cast<int>(drawQuad.width),
+                   static_cast<int>(drawQuad.height)};
+    SDL_Rect* drawCopy = &t2;
+    if (drawQuad.isNull()) { drawCopy = NULL; }
+
+    drawCopy->x -= camera.position.x;
+    drawCopy->y += camera.position.y;
+
+    SDL_Texture* texture;
+
+    try {
+        SDL_RenderCopy(renderer,
+                       _textureSheets.at(sheetName),
+                       clipCopy,
+                       drawCopy);
+        return ENGINE_SUCCESS;
+    } catch (std::runtime_error e) {
+        drawRectangle(drawQuad);
+        return ENGINE_FILE_NOT_FOUND;
+    }
+}
+
 DISPLAY_ENGINE_STATUS DisplayEngine::drawSpriteAt(const std::string& sheetName,
                                                   const DisplayRectangle& clipQuad,
                                                   const DisplayRectangle& drawQuad)
