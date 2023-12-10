@@ -85,4 +85,34 @@ bool separatedByAxis(const PolygonCollider& colliderA,
     return false;
 }
 
+bool DiagonalsIntersected(const PolygonCollider& colliderA,
+                          const PolygonCollider& colliderB)
+{
+    auto verticesA = colliderA.vertices;
+    auto verticesB = colliderB.vertices;
+
+    for (int p = 0; p < verticesA.size(); p++) {
+        auto lineAStart = colliderA.getPosition();
+        auto lineAEnd   = verticesA[p];
+
+        for (int q = 0; q < verticesB.size(); q++) {
+            auto lineBStart = verticesB[q];
+            auto lineBEnd = verticesB[(q + 1) % verticesB.size()];
+
+            auto h = (lineBEnd.x - lineBStart.x) * (lineAStart.y - lineAEnd.y)
+                   - (lineAStart.x - lineAEnd.x) * (lineBEnd.y - lineBStart.y);
+            auto t1 = ((lineBStart.y - lineBEnd.y) * (lineAStart.x - lineBStart.x)
+                    + (lineBEnd.x - lineBStart.x) * (lineAStart.y - lineBStart.y)) / h;
+            auto t2 = ((lineAStart.y - lineAEnd.y) * (lineAStart.x - lineBStart.x)
+                    + (lineAEnd.x - lineAStart.x) * (lineAStart.y - lineBStart.y)) / h;
+
+            if (t1 >= 0.0f && t1 < 1.0f && t2 > 0.0f && t2 < 1.0f) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 }; // namespace orgphysics
