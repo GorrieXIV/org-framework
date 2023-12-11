@@ -85,8 +85,29 @@ bool separatedByAxis(const PolygonCollider& colliderA,
     return false;
 }
 
-bool DiagonalsIntersected(const PolygonCollider& colliderA,
-                          const PolygonCollider& colliderB)
+bool dividedByADiagonal(const PolygonCollider& colliderA,
+                        const PolygonCollider& colliderB)
+{
+    // Check for base cases like unintialized colliders.
+    if (!colliderA.vertices.size() || !colliderB.vertices.size()) {
+        return false;
+    }
+
+    // Check diagonals of A against B.
+    if (diagonalFound(colliderA, colliderB)) {
+        return true;
+    }
+
+    // Check diagonals of B against A.
+    if (diagonalFound(colliderB, colliderA)) {
+        return true;
+    }
+
+    return false;
+}
+
+bool diagonalFound(const PolygonCollider& colliderA,
+                   const PolygonCollider& colliderB)
 {
     auto verticesA = colliderA.vertices;
     auto verticesB = colliderB.vertices;
