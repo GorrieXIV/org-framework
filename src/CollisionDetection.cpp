@@ -85,8 +85,35 @@ bool separatedByAxis(const PolygonCollider& colliderA,
     return false;
 }
 
-bool dividedByADiagonal(const PolygonCollider& colliderA,
-                        const PolygonCollider& colliderB)
+bool collisionDetectedFromDiagonal(const PolygonCollider& colliderA,
+                                   const PolygonCollider& colliderB)
+{
+    // Check for base cases like unintialized colliders.
+    if (!colliderA.vertices.size() || !colliderB.vertices.size()) {
+        return false;
+    }
+
+    // This vector denotes the displacement that should be made to colliderA
+    // in order to resolve the collision.
+    Vector2 displacementVector = {0, 0};
+
+    // Check diagonals of A against B.
+    if (diagonalFound(colliderA, colliderB, displacementVector)) {
+        return true;
+    }
+
+    // Check diagonals of B against A.
+    if (diagonalFound(colliderB, colliderA, displacementVector)) {
+        return true;
+    }
+
+    return false;
+}
+
+bool checkDiagonalOverlaps(const PolygonCollider& colliderA,
+                           const PolygonCollider& colliderB,
+                           Vector2& displacementA,
+                           Vector2& displacementB)
 {
     // Check for base cases like unintialized colliders.
     if (!colliderA.vertices.size() || !colliderB.vertices.size()) {
@@ -94,12 +121,12 @@ bool dividedByADiagonal(const PolygonCollider& colliderA,
     }
 
     // Check diagonals of A against B.
-    if (diagonalFound(colliderA, colliderB)) {
+    if (diagonalFound(colliderA, colliderB, displacementB)) {
         return true;
     }
 
     // Check diagonals of B against A.
-    if (diagonalFound(colliderB, colliderA)) {
+    if (diagonalFound(colliderB, colliderA, displacementA)) {
         return true;
     }
 
@@ -107,7 +134,8 @@ bool dividedByADiagonal(const PolygonCollider& colliderA,
 }
 
 bool diagonalFound(const PolygonCollider& colliderA,
-                   const PolygonCollider& colliderB)
+                   const PolygonCollider& colliderB,
+                   Vector2& displacementVector)
 {
     auto verticesA = colliderA.vertices;
     auto verticesB = colliderB.vertices;
@@ -128,7 +156,8 @@ bool diagonalFound(const PolygonCollider& colliderA,
                     + (lineAEnd.x - lineAStart.x) * (lineAStart.y - lineBStart.y)) / h;
 
             if (t1 >= 0.0f && t1 < 1.0f && t2 > 0.0f && t2 < 1.0f) {
-                return true;
+                displacementVector.x += (1.0f - t1) * (lineAEnd.x - lineAStart.x);
+                displacementVector.y += (1.0f - t2) * (lineAEnd.y - lineAStart.y);
             }
         }
     }

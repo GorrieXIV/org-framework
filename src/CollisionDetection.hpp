@@ -18,10 +18,16 @@ bool collisionDetected(const PolygonCollider& colliderA,
 bool separatedByAxis(const PolygonCollider& colliderA,
                      const PolygonCollider& colliderB);
 
-bool dividedByADiagonal(const PolygonCollider& colliderA,
-                        const PolygonCollider& colliderB);
+bool collisionDetectedFromDiagonal(const PolygonCollider& colliderA,
+                                   const PolygonCollider& colliderB);
+
+bool checkDiagonalOverlaps(const PolygonCollider& colliderA,
+                           const PolygonCollider& colliderB,
+                           Vector2& displacementA,
+                           Vector2& displacementB);
 
 bool diagonalFound(const PolygonCollider& colliderA,
-                   const PolygonCollider& colliderB);
+                   const PolygonCollider& colliderB,
+                   Vector2& diplacementVector);
 
 }; // namespace orgphysics

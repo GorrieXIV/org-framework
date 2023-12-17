@@ -69,9 +69,10 @@ class Entity {
     void applyConstantForce(Vector2 force);
 
     /// Use this function to tell `this` that it collided with another Entity.
-    virtual void triggerCollision(const Entity& collidingEntity) {
+    virtual void triggerCollision(const Entity& collidingEntity, const Vector2& displacement) {
         if (collidingEntity.type == "blocking") {
             _collisionDetected = true;
+            _pendingPosition += displacement;
         }
 
         if (collidingEntity.id == "ground") {

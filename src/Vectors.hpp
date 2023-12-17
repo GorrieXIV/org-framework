@@ -16,10 +16,13 @@ class Vector2 {
   public:
     float x = 0.0f;
     float y = 0.0f;
-    bool isNull = false;
 
     static Vector2 nullVector() {
-        return Vector2{0, 0, true};
+        return Vector2{0.0f, 0.0f};
+    }
+
+    bool isNull() const {
+        return (x == 0.0f && y == 0.0f);
     }
 
     std::string toString() const {
