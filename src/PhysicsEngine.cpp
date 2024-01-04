@@ -72,17 +72,13 @@ void PhysicsEngine:: _checkCollisions()
             auto hitboxA = A->getLookAheadCollider();
             auto hitboxB = B->getLookAheadCollider();
 
-
             Vector2 displacementA = {0, 0};
             Vector2 displacementB = {0, 0};
 
             // If A and B coincide, alert both entities of the collision.
             checkDiagonalOverlaps(hitboxA, hitboxB, displacementA, displacementB);
             if (!displacementA.isNull() || !displacementB.isNull()) {
-                if (A->isFixed && B->isFixed) {
-                    displacementA = {0, 0};
-                    displacementB = {0, 0};
-                } else if (A->isFixed && !B->isFixed) {
+                if (A->isFixed && !B->isFixed) {
                     displacementB -= displacementA;
                     displacementA = {0, 0};
                 } else if (B->isFixed && !A->isFixed) {

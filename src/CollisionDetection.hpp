@@ -21,13 +21,16 @@ bool separatedByAxis(const PolygonCollider& colliderA,
 bool collisionDetectedFromDiagonal(const PolygonCollider& colliderA,
                                    const PolygonCollider& colliderB);
 
-bool checkDiagonalOverlaps(const PolygonCollider& colliderA,
+void checkDiagonalOverlaps(const PolygonCollider& colliderA,
                            const PolygonCollider& colliderB,
                            Vector2& displacementA,
                            Vector2& displacementB);
 
-bool diagonalFound(const PolygonCollider& colliderA,
-                   const PolygonCollider& colliderB,
-                   Vector2& diplacementVector);
+bool checkDiagonalOverlap(const PolygonCollider& colliderA,
+                          const PolygonCollider& colliderB,
+                          Vector2& diplacementVector);
+
+bool diagonalOverlapFound(const PolygonCollider& colliderA,
+                          const PolygonCollider& colliderB);
 
 }; // namespace orgphysics

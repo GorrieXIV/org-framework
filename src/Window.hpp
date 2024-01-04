@@ -19,5 +19,5 @@
 #define FRAME_RATE 30
 #define FRAME_PERIOD 1000 / FRAME_RATE
 
-const int SCREEN_WIDTH  = 624;
-const int SCREEN_HEIGHT = 624;
+const int SCREEN_WIDTH  = 1280;
+const int SCREEN_HEIGHT = 1280;
