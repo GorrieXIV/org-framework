@@ -72,9 +72,10 @@ class Entity {
     virtual void triggerCollision(const Entity& collidingEntity, const Vector2& displacement) {
         if (collidingEntity.type == "blocking") {
             _collisionDetected = true;
-            // _pendingPosition -= displacement;
 
-            if (displacement.y > 0) {
+            _pendingPosition -= displacement;
+
+            if (!displacement.isNull() && displacement.y > 0 || collidingEntity.id == "ground") {
                 grounded = true;
                 acceleration.y = 0;
             }

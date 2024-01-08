@@ -11,6 +11,13 @@ using namespace orgmath;
 
 namespace orgphysics {
 
+enum CollisionAlgorithm {
+    SAT,
+    SAT_RESOLVED,
+    DIAGONAL,
+    DIAGONAL_RESOLVED
+};
+
 class PhysicsEngine {
   public:
     /// Default Constructor.
@@ -34,6 +41,7 @@ class PhysicsEngine {
 
     std::vector<std::shared_ptr<Entity>> _entities;
     std::vector<Vector2> _globalForces;
+    CollisionAlgorithm _collisionAlgorithm = DIAGONAL_RESOLVED;
 };
 
 }; // namespace orgphysics

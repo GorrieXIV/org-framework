@@ -12,11 +12,19 @@ namespace orgphysics {
 bool collisionDetected(const Rectangle<float>& recA,
                        const Rectangle<float>& recB);
 
-bool collisionDetected(const PolygonCollider& colliderA,
-                       const PolygonCollider& colliderB);
+bool collisionDetectedBySAT(const PolygonCollider& colliderA,
+                            const PolygonCollider& colliderB);
+
+bool collisionDetectedBySAT(const PolygonCollider& colliderA,
+                            const PolygonCollider& colliderB,
+                            Vector2& displacement);
 
 bool separatedByAxis(const PolygonCollider& colliderA,
                      const PolygonCollider& colliderB);
+
+bool separatedByAxis(const PolygonCollider& colliderA,
+                     const PolygonCollider& colliderB,
+                     float& overlap);
 
 bool collisionDetectedFromDiagonal(const PolygonCollider& colliderA,
                                    const PolygonCollider& colliderB);
