@@ -52,4 +52,10 @@ class Vector2 {
         float newY = this->y - rhs.y;
         return {newX, newY};
     }
+
+    Vector2 operator*(const int& multiple) const {
+        float newX = this->x * multiple;
+        float newY = this->y * multiple;
+        return {newX, newY};
+    }
 };
