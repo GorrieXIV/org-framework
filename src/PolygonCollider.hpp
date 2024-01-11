@@ -24,7 +24,6 @@ class PolygonCollider : Collider {
     /// Get the entities width and height as a 2d vector.
     Vector2 getDimensions() const { return {_width, _height}; }
 
-
     /// Set the entities position with a 2d vector
     void setPosition(Vector2 position);
 
@@ -44,6 +43,16 @@ class PolygonCollider : Collider {
 
     // TODO: Implement polygon collider rotation.
     // void rotate(const double degreesRotated);
+
+    std::string toString() const {
+        std::string rtn = "[" + vertices[0].toString();
+
+        for (int i = 1; i < vertices.size(); i++) {
+            rtn += ", " + vertices[i].toString();
+        }
+
+        return rtn + "]";
+    }
 
     std::string type = "";
     std::string id = "";
