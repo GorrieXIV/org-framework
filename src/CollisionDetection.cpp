@@ -73,7 +73,6 @@ bool collisionDetectedBySAT(const PolygonCollider& colliderA,
     Vector2 d = { bPosition.x - aPosition.x,
                   bPosition.y - aPosition.y };
     float s = sqrtf(d.x * d.x + d.y * d.y);
-    std::cout << "overlap: " << std::to_string(overlap) << std::endl;
     displacement.x = overlap * d.x / s;
     displacement.y = overlap * d.y / s;
 
@@ -139,6 +138,10 @@ bool separatedByAxis(const PolygonCollider& colliderA,
         Vector2 projectionAxis = {-1 * (verticesA[b].y - verticesA[a].y),
                                   verticesA[b].x - verticesA[a].x};
 
+        // Normalize projection axis.
+        float d = sqrtf(projectionAxis.x * projectionAxis.x + projectionAxis.y * projectionAxis.y);
+        projectionAxis = { projectionAxis.x / d, projectionAxis.y / d };
+
         // Initialize max/min values.
         float minA = std::numeric_limits<float>::infinity();
         float maxA = -1 * std::numeric_limits<float>::infinity();
@@ -159,11 +162,12 @@ bool separatedByAxis(const PolygonCollider& colliderA,
             maxB = std::max(maxB, projectedV);
         }
 
-        overlap = std::min(std::min(maxA, maxB) - std::max(minA, minB), overlap);
-
         // Check if projections of the two polygons overlap.
         // If they don't overlap, return true as we've found a separator.
         if (!(maxB >= minA && maxA >= minB)) return true;
+
+        auto currentOverlap = std::min(maxA, maxB) - std::max(minA, minB);
+        overlap = std::min(currentOverlap, overlap);
     }
 
     return false;

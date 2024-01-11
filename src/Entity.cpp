@@ -55,7 +55,7 @@ void Entity:: applyConstantForce(Vector2 f)
 }
 
 void Entity:: resolvePendingActions() {
-    if (!_collisionDetected) {
+    // if (!_collisionDetected) {
         _position = _pendingPosition + acceleration;
         collider.moveTo(_position);
 
@@ -63,7 +63,7 @@ void Entity:: resolvePendingActions() {
             _angle += _pendingRotation;
             collider.rotate(_angle);
         }
-    }
+    // }
 
     _pendingPosition = _position;
     _pendingRotation = 0;

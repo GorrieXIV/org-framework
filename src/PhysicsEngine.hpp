@@ -41,7 +41,7 @@ class PhysicsEngine {
 
     std::vector<std::shared_ptr<Entity>> _entities;
     std::vector<Vector2> _globalForces;
-    CollisionAlgorithm _collisionAlgorithm = DIAGONAL_RESOLVED;
+    CollisionAlgorithm _collisionAlgorithm = SAT_RESOLVED;
 };
 
 }; // namespace orgphysics
