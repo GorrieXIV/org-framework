@@ -1,5 +1,7 @@
 #include "PhysicsEngine.hpp"
 
+#include <exception>
+
 namespace orgphysics {
 
 PhysicsEngine:: PhysicsEngine()
@@ -71,8 +73,8 @@ void PhysicsEngine:: _checkCollisions()
 
             auto hitboxA = A->getLookAheadCollider();
             auto hitboxB = B->getLookAheadCollider();
-            Vector2 displacementA = {0, 0};
-            Vector2 displacementB = {0, 0};
+            float overlapA = 0.0f;
+            float overlapB = 0.0f;
             bool collisionDetected = false;
 
             switch (_collisionAlgorithm) {
@@ -81,13 +83,13 @@ void PhysicsEngine:: _checkCollisions()
                     break;
                 }
                 case SAT_RESOLVED: {
-                    Vector2 generalDisplacement = {0, 0};
-                    collisionDetected = collisionDetectedBySAT(hitboxA, hitboxB, generalDisplacement);
+                    float overlap = 0.0f;
+                    collisionDetected = collisionDetectedBySAT(hitboxA, hitboxB, overlap);
 
                     if (A->isFixed && !B->isFixed) {
-                        displacementB = generalDisplacement;
+                        overlapB = overlap;
                     } else if (B->isFixed && !A->isFixed) {
-                        displacementA = generalDisplacement;
+                        overlapA = overlap;
                     }
 
                     break;
@@ -97,18 +99,22 @@ void PhysicsEngine:: _checkCollisions()
                     break;
                 }
                 case DIAGONAL_RESOLVED: {
-                    checkDiagonalOverlaps(hitboxA, hitboxB, displacementA, displacementB);
-                    collisionDetected = !displacementA.isNull() || !displacementB.isNull();
+                    std::throw_with_nested("Resolved diagonals not currently supported");
 
-                    if (A->isFixed && !B->isFixed) {
-                        displacementB += displacementA;
-                        displacementB = displacementB * -1;
-                        displacementA = {0, 0};
-                    } else if (B->isFixed && !A->isFixed) {
-                        displacementA += displacementB;
-                        displacementA = displacementA * -1;
-                        displacementB = {0, 0};
-                    }
+                    //TODO: Update diagonals so it returns an overlap value instead of a displacement vector.
+
+                    //checkDiagonalOverlaps(hitboxA, hitboxB, displacementA, displacementB);
+                    //collisionDetected = !displacementA.isNull() || !displacementB.isNull();
+
+                    //if (A->isFixed && !B->isFixed) {
+                    //    displacementB += displacementA;
+                    //    displacementB = displacementB * -1;
+                    //    displacementA = {0, 0};
+                    //} else if (B->isFixed && !A->isFixed) {
+                    //    displacementA += displacementB;
+                    //    displacementA = displacementA * -1;
+                    //    displacementB = {0, 0};
+                    //}
 
                     break;
                 }
@@ -116,8 +122,8 @@ void PhysicsEngine:: _checkCollisions()
 
             // If A and B coincide, alert both entities of the collision.
             if (collisionDetected) {
-                A->triggerCollision(*B, displacementA);
-                B->triggerCollision(*A, displacementB);
+                A->triggerCollision(*B, overlapA);
+                B->triggerCollision(*A, overlapB);
             }
         }
 

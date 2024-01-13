@@ -44,12 +44,12 @@ bool collisionDetectedBySAT(const PolygonCollider& colliderA,
 
 // Generic polygon-based collision detection.
 // This function employs the Separating Axis Theorem
-// Overlap resolution vector is returned via `displacement`.
+// Amount of overlap is returned as a `float`.
 bool collisionDetectedBySAT(const PolygonCollider& colliderA,
                             const PolygonCollider& colliderB,
-                            Vector2& displacement)
+                            float& overlap)
 {
-    auto overlap = std::numeric_limits<float>::max();
+    overlap = std::numeric_limits<float>::max();
 
     // Check for base cases like unintialized colliders.
     if (!colliderA.vertices.size() || !colliderB.vertices.size()) {
@@ -65,16 +65,6 @@ bool collisionDetectedBySAT(const PolygonCollider& colliderA,
     if (separatedByAxis(colliderB, colliderA, overlap)) {
         return false;
     }
-
-    // If we got here, the objects have collided, we will displace r1
-    // by overlap along the vector between the two object centers.
-    auto aPosition = colliderA.getPosition();
-    auto bPosition = colliderB.getPosition();
-    Vector2 d = { bPosition.x - aPosition.x,
-                  bPosition.y - aPosition.y };
-    float s = sqrtf(d.x * d.x + d.y * d.y);
-    displacement.x = overlap * d.x / s;
-    displacement.y = overlap * d.y / s;
 
     // No separators were found, therefore a collision has occurred.
     return true;

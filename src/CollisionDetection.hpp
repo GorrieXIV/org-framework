@@ -17,7 +17,7 @@ bool collisionDetectedBySAT(const PolygonCollider& colliderA,
 
 bool collisionDetectedBySAT(const PolygonCollider& colliderA,
                             const PolygonCollider& colliderB,
-                            Vector2& displacement);
+                            float& overlap);
 
 bool separatedByAxis(const PolygonCollider& colliderA,
                      const PolygonCollider& colliderB);

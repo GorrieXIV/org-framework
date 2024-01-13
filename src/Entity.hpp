@@ -69,15 +69,23 @@ class Entity {
     void applyConstantForce(Vector2 force);
 
     /// Use this function to tell `this` that it collided with another Entity.
-    virtual void triggerCollision(const Entity& collidingEntity, const Vector2& displacement) {
+    virtual void triggerCollision(const Entity& collidingEntity, const float& overlap) {
         if (collidingEntity.type == "blocking") {
             _collisionDetected = true;
 
-            _pendingPosition -= displacement;
+            // If an overlap was found, displace the entity.
+            if (overlap != 0.0f) {
+                auto travelVector = _pendingPosition + acceleration - _position;
+                auto s = sqrtf(travelVector.x * travelVector.x +
+                               travelVector.y * travelVector.y);
+                Vector2 displacement = {overlap * travelVector.x / s,
+                                        overlap * travelVector.y / s};
+                _pendingPosition -= displacement;
 
-            if (!displacement.isNull() && displacement.y > 0 || collidingEntity.id == "ground") {
-                grounded = true;
-                acceleration.y = 0;
+                if (overlap != 0.0f && displacement.y > 0 || collidingEntity.id == "ground") {
+                    grounded = true;
+                    acceleration.y = 0;
+                }
             }
         }
     }
