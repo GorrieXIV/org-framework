@@ -9,7 +9,7 @@ Management layers and interfaces are provided for the following, amongst other t
 - Rendering and pixel-drawing
 - Audio playback
 - Input detection and events
-- Collision detection
+- Collision detection & some simulated Newtonian mechanics
 
 ## Installing Dependencies
 
