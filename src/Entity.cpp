@@ -65,6 +65,12 @@ void Entity:: resolvePendingActions() {
         }
     // }
 
+    if (_groundedPending) {
+        grounded = true;
+        acceleration.y = 0;
+        _groundedPending = false;
+    }
+
     _pendingPosition = _position;
     _pendingRotation = 0;
     _collisionDetected = false;

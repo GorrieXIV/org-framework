@@ -78,13 +78,17 @@ class Entity {
                 auto travelVector = _pendingPosition + acceleration - _position;
                 auto s = sqrtf(travelVector.x * travelVector.x +
                                travelVector.y * travelVector.y);
+                
+                if (s == 0.0f) {
+                    return;
+                }
+
                 Vector2 displacement = {overlap * travelVector.x / s,
                                         overlap * travelVector.y / s};
                 _pendingPosition -= displacement;
 
                 if (overlap != 0.0f && displacement.y > 0 || collidingEntity.id == "ground") {
-                    grounded = true;
-                    acceleration.y = 0;
+                    _groundedPending = true;
                 }
             }
         }
@@ -116,6 +120,7 @@ class Entity {
     double _angle = 0;
     double _pendingRotation = 0;
     bool _collisionDetected = false;
+    bool _groundedPending = false;
 
     std::vector<Hitbox> _hitboxes{};
     std::vector<Vector2> _activeForces{};
