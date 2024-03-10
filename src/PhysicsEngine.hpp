@@ -4,7 +4,8 @@
 #include <memory>
 
 #include "Geometry.hpp"
-#include "CollisionDetection.hpp"
+#include "SATCollisions.hpp"
+#include "DiagonalCollisions.hpp"
 #include "Entity.hpp"
 
 using namespace orgmath;

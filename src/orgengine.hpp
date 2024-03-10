@@ -8,7 +8,6 @@
 #include "Animation.hpp"
 #include "Camera.hpp"
 #include "PhysicsEngine.hpp"
-#include "CollisionDetection.hpp"
 #include "Controller.hpp"
 #include "Entity.hpp"
 #include "Texture.hpp"

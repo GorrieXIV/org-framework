@@ -49,9 +49,7 @@ void PhysicsEngine:: _applyForces()
             netUnitForce += F;
         }
 
-        if (!A->grounded) {
-            netUnitForce += netGlobalForce;
-        }
+        netUnitForce += netGlobalForce;
 
         A->acceleration += netUnitForce;
     }
