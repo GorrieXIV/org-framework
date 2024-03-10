@@ -55,6 +55,5 @@ class TexturedEntity : public Entity {
     bool              _invalidSpriteId = false;
     std::vector<std::pair<std::shared_ptr<Texture>, DisplayRectangle>> _childTextures{};
 
-
     RENDER_ANCHOR _renderAnchor = RENDER_ANCHOR::CENTER;
 };
