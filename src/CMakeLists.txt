@@ -12,6 +12,7 @@ set(HEADERS
     BasicCollisions.hpp
     SATCollisions.hpp
     DiagonalCollisions.hpp
+    LookAheadCollisions.hpp
     Timer.hpp
     Entity.hpp
     Controller.hpp
@@ -32,6 +33,7 @@ set(SOURCES
     BasicCollisions.cpp
     SATCollisions.cpp
     DiagonalCollisions.cpp
+    LookAheadCollisions.cpp
     Timer.cpp
     Entity.cpp
     Controller.cpp

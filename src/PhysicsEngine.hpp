@@ -6,6 +6,7 @@
 #include "Geometry.hpp"
 #include "SATCollisions.hpp"
 #include "DiagonalCollisions.hpp"
+#include "LookAheadCollisions.hpp"
 #include "Entity.hpp"
 
 using namespace orgmath;
@@ -16,7 +17,8 @@ enum CollisionAlgorithm {
     SAT,
     SAT_RESOLVED,
     DIAGONAL,
-    DIAGONAL_RESOLVED
+    DIAGONAL_RESOLVED,
+    LOOK_AHEAD_RESOLVED
 };
 
 class PhysicsEngine {

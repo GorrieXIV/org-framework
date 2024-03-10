@@ -116,6 +116,11 @@ void PhysicsEngine:: _checkCollisions()
 
                     break;
                 }
+                case LOOK_AHEAD_RESOLVED: {
+                    Vector2 displacement{};
+                    collisionDetected = collisionDetectedByLookAhead(*A, hitboxB, displacement);
+                    break;
+                }
             }
 
             // If A and B coincide, alert both entities of the collision.
