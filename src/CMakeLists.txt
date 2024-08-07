@@ -6,6 +6,7 @@ set(HEADERS
     Window.hpp
     Geometry.hpp
     Vectors.hpp
+    Lines.hpp
     PhysicsEngine.hpp
     Collider.hpp
     PolygonCollider.hpp

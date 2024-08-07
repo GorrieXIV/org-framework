@@ -1,9 +1,8 @@
 #pragma once
 
-#include <vector>
-
 #include "Geometry.hpp"
 #include "Entity.hpp"
+#include "Lines.hpp"
 #include "PolygonCollider.hpp"
 
 using namespace orgmath;
