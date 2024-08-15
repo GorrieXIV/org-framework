@@ -49,9 +49,7 @@ void PhysicsEngine:: _applyForces()
             netUnitForce += F;
         }
 
-        if (!A->grounded) {
-            netUnitForce += netGlobalForce;
-        }
+        netUnitForce += netGlobalForce;
 
         A->acceleration += netUnitForce;
     }
@@ -116,6 +114,11 @@ void PhysicsEngine:: _checkCollisions()
                     //    displacementB = {0, 0};
                     //}
 
+                    break;
+                }
+                case LOOK_AHEAD_RESOLVED: {
+                    Vector2 displacement{};
+                    collisionDetected = collisionDetectedByLookAhead(*A, hitboxB, displacement);
                     break;
                 }
             }
