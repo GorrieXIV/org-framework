@@ -63,10 +63,29 @@ class Vector2
         return {newX, newY};
     }
 
-    Vector2 operator*(const int& multiple) const
+    // Scalar multiplication by an integer.
+    Vector2 operator*(int multiple) const
     {
-        float newX = this->x * multiple;
-        float newY = this->y * multiple;
-        return {newX, newY};
+        return {
+            this->x * multiple,
+            this->y * multiple
+        };
     }
+
+    // Scalar multiplication by a float.
+    Vector2 operator*(float multiple) const
+    {
+        return {
+            this->x * multiple,
+            this->y * multiple
+        };
+    }
+
+    // 2-dimensional vector "cross product".
+    float operator*(const Vector2& rhs) const
+    {
+        return (this->x * rhs.y) - (this->y * rhs.x);
+    }
+
+
 };

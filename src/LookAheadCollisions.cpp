@@ -41,14 +41,19 @@ bool collisionDetectedByLookAhead(const Entity& movingEntity,
         // Here, (P, R) will be the current translation vector, and (Q, S) is the current
         // fixed collider edge.
         LineSegment PR(startCollider.vertices[i], endCollider.vertices[i]);
+        auto P = startCollider.vertices[i];
+        auto R = endCollider.vertices[i];
 
         for (const auto& QS : colliderEdges) {
             // We can then evaluate a and b by subtracting P from R and Q from S, respectively.
-            auto a = PR.end - PR.start;
-            auto b = QS.end - QS.start;
+            auto Q = QS.start, S = QS.end;
+            auto a = R - P;
+            auto b = S - Q;
 
             // Now solve for t.
-            auto t = ((QS.start - PR.start) * b) / (a * b);
+            auto t = ((Q - P) * b) / (a * b);
+
+            auto collisionPoint = P + (a * t);
         }
     }
 
