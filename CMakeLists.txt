@@ -25,9 +25,6 @@ enable_testing()
 
 if(USE_LOCAL_LIBS)
     add_subdirectory(json)
-else()
-    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-    conan_basic_setup()
 endif()
 
 set(INSTALL_BIN_DIR "bin/")
