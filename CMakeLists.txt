@@ -8,7 +8,9 @@ project(orgengine)
 set(orgengine_VERSION_MAJOR 0)
 set(orgengine_VERSION_MINOR 2)
 
-set(CMAKE_BUILD_TYPE Debug)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
 
 set(CMAKE_OSX_SYSROOT /)
 set(CMAKE_OSX_DEPLOYMENT_TARGET)
