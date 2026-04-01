@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
+include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
 
 # # # # # # # # # # # # # # # # # #
 project(orgengine)
@@ -22,10 +23,6 @@ include(cxx)
 
 set_cxx_ver(14)
 enable_testing()
-
-if(USE_LOCAL_LIBS)
-    add_subdirectory(json)
-endif()
 
 set(INSTALL_BIN_DIR "bin/")
 

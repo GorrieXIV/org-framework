@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Installs dependencies for compiling origins
 
@@ -6,7 +6,7 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
         # GNU/Linux
         echo "Installing libraries: libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev libboost-all-dev..."
         apt-get update;
-        apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev libboost-all-dev -y;
+        apt-get install libsdl2-dev libsdl2-image-dev libsdl2-ttf-dev libsdl2-mixer-dev -y;
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OS
         echo "Installing libraries: cmake sdl2 sdl2_image sdl2_ttf sdl2_mixer boost..."
