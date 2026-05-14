@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
-include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
+
+if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+  include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
+endif()
 
 # # # # # # # # # # # # # # # # # #
 project(orgengine)
