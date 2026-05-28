@@ -6,10 +6,14 @@ set(HEADERS
     Window.hpp
     Geometry.hpp
     Vectors.hpp
+    Lines.hpp
     PhysicsEngine.hpp
     Collider.hpp
     PolygonCollider.hpp
-    CollisionDetection.hpp
+    BasicCollisions.hpp
+    SATCollisions.hpp
+    DiagonalCollisions.hpp
+    LookAheadCollisions.hpp
     Timer.hpp
     Entity.hpp
     Controller.hpp
@@ -27,7 +31,10 @@ set(SOURCES
     PhysicsEngine.cpp
     Collider.cpp
     PolygonCollider.cpp
-    CollisionDetection.cpp
+    BasicCollisions.cpp
+    SATCollisions.cpp
+    DiagonalCollisions.cpp
+    LookAheadCollisions.cpp
     Timer.cpp
     Entity.cpp
     Controller.cpp
