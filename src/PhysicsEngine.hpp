@@ -39,7 +39,8 @@ class PhysicsEngine {
     void _applyForces();
     void _checkCollisions();
 
-    std::vector<std::shared_ptr<Entity>> _entities;
+    // Non-owning: entities are owned by the caller and must outlive the engine.
+    std::vector<Entity*> _entities;
     std::vector<Vector2> _globalForces;
     CollisionAlgorithm _collisionAlgorithm = SAT_RESOLVED;
 };

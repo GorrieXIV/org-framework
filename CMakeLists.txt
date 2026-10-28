@@ -1,15 +1,19 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.14)
 
 if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-  include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
+  if(EXISTS "${CMAKE_BINARY_DIR}/generators/conan_toolchain.cmake")
+    include("${CMAKE_BINARY_DIR}/generators/conan_toolchain.cmake")
+  elseif(EXISTS "${CMAKE_BINARY_DIR}/conan_toolchain.cmake")
+    include("${CMAKE_BINARY_DIR}/conan_toolchain.cmake")
+  endif()
 endif()
 
 # # # # # # # # # # # # # # # # # #
-project(orgengine)
+project(orgengine VERSION 0.2.0 LANGUAGES CXX)
 # # # # # # # # # # # # # # # # # #
 
-set(orgengine_VERSION_MAJOR 0)
-set(orgengine_VERSION_MINOR 2)
+set(orgengine_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(orgengine_VERSION_MINOR ${PROJECT_VERSION_MINOR})
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -31,4 +35,31 @@ enable_testing()
 
 set(INSTALL_BIN_DIR "bin/")
 
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
 add_subdirectory(src)
+
+install(EXPORT orgengineTargets
+    FILE orgengineTargets.cmake
+    NAMESPACE orgengine::
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/orgengine"
+)
+
+configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/orgengineConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/orgengineConfig.cmake"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/orgengine"
+)
+
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/orgengineConfigVersion.cmake"
+    VERSION "${PROJECT_VERSION}"
+    COMPATIBILITY SameMinorVersion
+)
+
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/orgengineConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/orgengineConfigVersion.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/orgengine"
+)

@@ -7,6 +7,9 @@
 build
 origins/build
 
+# Local install prefix (cmake --install)
+install
+
 # Doc build files
 *.aux
 *.log

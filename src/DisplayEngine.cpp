@@ -355,13 +355,15 @@ DISPLAY_ENGINE_STATUS DisplayEngine::drawPolygon(const std::vector<Vector2> vert
                            vertices[(i+1) % numVertices].x - camera.position.x,
                            vertices[(i+1) % numVertices].y) + camera.position.y;
     }
+
+    return DISPLAY_ENGINE_STATUS::ENGINE_SUCCESS;
 }
 
 DISPLAY_ENGINE_STATUS DisplayEngine::drawBackground(const std::string& sheet)
 {
     auto drawQuad = DisplayRectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     auto spriteClip = DisplayRectangle(0, 0, 0, 0);
-    drawTextureAt(sheet, spriteClip, drawQuad, 0);
+    return drawTextureAt(sheet, spriteClip, drawQuad, 0);
 }
 
 
@@ -447,18 +449,18 @@ void DisplayEngine::close()
         SDL_Texture* sheet = idSheetPair.second;
         if (sheet != NULL) {
             SDL_DestroyTexture(sheet);
-            sheet = NULL;
         }
     }
+    _textureSheets.clear();
 
     // Destroy all loaded fonts.
     for (const auto& idFontPair : _fonts) {
         TTF_Font* font = idFontPair.second;
         if (font != NULL) {
             TTF_CloseFont(font);
-            font = NULL;
         }
     }
+    _fonts.clear();
 
 
     // Quit SDL subsystems.

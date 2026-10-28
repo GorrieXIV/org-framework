@@ -1,0 +1,12 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(SDL2 REQUIRED)
+find_dependency(SDL2_image REQUIRED)
+find_dependency(SDL2_ttf REQUIRED)
+find_dependency(SDL2_mixer REQUIRED)
+find_dependency(nlohmann_json REQUIRED)
+
+include("${CMAKE_CURRENT_LIST_DIR}/orgengineTargets.cmake")
+
+check_required_components(orgengine)

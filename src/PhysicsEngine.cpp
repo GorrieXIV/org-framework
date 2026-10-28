@@ -16,8 +16,7 @@ PhysicsEngine:: ~PhysicsEngine()
 
 void PhysicsEngine:: addEntity(Entity& entity)
 {
-    auto entitySharedPtr = std::shared_ptr<Entity>(&entity);
-    _entities.push_back(entitySharedPtr);
+    _entities.push_back(&entity);
 }
 
 void PhysicsEngine:: update()
